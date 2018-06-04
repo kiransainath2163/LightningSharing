@@ -1,11 +1,15 @@
 ({
 	doInit : function(component, undefined, helper) {
+		// get info rom pagereference?
+		let pageRef = component.get("v.pageReference");
+		component.set("v.recordId", pageRef.state.c__recordId);
 		helper.reload(component);
 
 		var action = component.get("c.sayMyName");
 		action.setParams({
 			recordId: component.get("v.recordId")
 		});
+
 		action.setCallback(this, function (a) {
 			var state = a.getState();
 			if (state === "SUCCESS") {
@@ -27,6 +31,10 @@
 
 	stopProp : function(component, event) {
 		event.stopPropagation();
+	},
+
+	navToRecord : function(component, event, helper) {
+		helper.nav(component);
 	},
 
 	delete : function(component, event, helper) {

@@ -228,6 +228,14 @@ private class TestLightningSharing {
 
   }
 
+	static testMethod void testSharingExistsAccount(){
+		// should not exist--accounts are public r/w
+		System.assertEquals(false, LightningSharing.sharingExists('Account'));
+		System.assertEquals(true, LightningSharing.sharingExists('PrivateTestObject__c'));
+		System.assertEquals(true, LightningSharing.sharingExists('ReadOnlyTestObject__c'));
+
+	}
+
   @testSetup static void makeData(){
     	//make some object for testing, like a lead
     	lead l = new lead();

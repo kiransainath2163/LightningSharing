@@ -2,11 +2,14 @@
   "packageDirectories": [
     {
       "path": "force-app",
-      "default": true,
       "id": "0Ho6A000000CaTSSA0",
       "versionName": "Lightning Sharing",
       "versionDescription": "share records manually in Lightning",
       "versionNumber": "1.8.0.NEXT"
+    },
+    {
+      "path": "implementation",
+      "default": true
     }
   ],
   "namespace": "",

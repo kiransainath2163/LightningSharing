@@ -1,4 +1,4 @@
-sfdx force:org:create -a ltngshare -f config/project-scratch-def.json -s -d 30
+sfdx force:org:create -a ltngshare -f config/project-scratch-def.json -s -d 1
 sfdx force:source:push
 sfdx force:user:permset:assign -n TestingPerms
 

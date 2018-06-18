@@ -5,14 +5,14 @@
       "id": "0Ho6A000000CaTSSA0",
       "versionName": "Lightning Sharing",
       "versionDescription": "share records manually in Lightning",
-      "versionNumber": "1.8.0.NEXT"
+      "versionNumber": "2.0.0.NEXT"
     },
     {
       "path": "implementation",
       "default": true
     }
   ],
-  "namespace": "",
+  "namespace": "ltngsharing",
   "sfdcLoginUrl": "https://login.salesforce.com",
   "sourceApiVersion": "41.0"
 }

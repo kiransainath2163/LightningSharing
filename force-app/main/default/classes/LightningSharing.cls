@@ -358,7 +358,7 @@ global static string getSharings(id recordId){
 		//custom objects
 		if (sobj.contains('__c')){
 			Map<String, Schema.SObjectType> tokens = Schema.getGlobalDescribe();
-			if (  tokens.containsKey( getSharingTableName(sobj) )  ) {
+			if (  tokens.containsKey( getSharingTableName(sobj) ) || tokens.containsKey('ltngsharing__' + getSharingTableName(sobj)) ) {
 				return true;
 			}
 		} else {

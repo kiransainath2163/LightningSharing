@@ -1,12 +1,15 @@
 ({
+
 	doInit : function(component) {
-		let evt = $A.get("e.force:navigateToComponent");
-		evt.setParams({
-			componentDef : "c:LightningSharing",
-			componentAttributes: {
-					recordId : component.get("v.recordId")
+		component.find('navService').navigate({
+			type: 'standard__component',
+			attributes: {
+				componentName: 'ltngsharing__LightningSharing'
+			},
+			state: {
+				"c__recordId": component.get('v.recordId')
 			}
 		});
-		evt.fire();
 	}
+
 })

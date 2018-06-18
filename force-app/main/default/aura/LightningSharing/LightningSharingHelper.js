@@ -1,11 +1,14 @@
 ({
 
-	nav : function (recordId) {
-    let navEvt = $A.get("e.force:navigateToSObject");
-    navEvt.setParams({
-      "recordId": recordId
-    });
-    navEvt.fire();
+	nav : function (component) {
+
+		component.find("navService").navigate({
+			type: 'standard__recordPage',
+			attributes: {
+				recordId: component.get("v.recordId"),
+				actionName: "view"
+			}
+		});
 	},
 
 	reload : function(component) {
@@ -28,7 +31,7 @@
 					"errors" : a.getError()
 				});
 				appEvent.fire();
-				helper.nav(component.get("v.recordId")); //go back to the original
+				helper.nav(component); //go back to the original
 			}
 		});
 		$A.enqueueAction(action);

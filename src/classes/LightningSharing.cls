@@ -205,9 +205,15 @@ global static string objectTypeFromId(id recordId){
 
 @AuraEnabled
 global static string getSharings(id recordId){
+
 	if (!canIEditPerms(recordId)){
 		throw new AuraHandledException('Only the record owner or administrators can access permissions');
 	}
+
+	if (!sharingExists(objectTypeFromId(recordId))){
+		throw new AuraHandledException('Sharing Settings must be private or public read/write to enable manual sharing');
+	}
+
 	list<sobject> results = database.query(buildQuery(recordId));
 	list<sharingHolder> output = new list<sharingHolder>();
 
@@ -345,6 +351,33 @@ global static string getSharings(id recordId){
 			//probably means they don't have sharing turned on for this object
 			throw new AuraHandledException('There is no sharing table for that object.  Are you SURE you changed the sharing setting to PRIVATE or READ ? ');
 		}
+	}
+
+	@TestVisible
+	private static boolean sharingExists(string sobj){
+		//custom objects
+		if (sobj.contains('__c')){
+			Map<String, Schema.SObjectType> tokens = Schema.getGlobalDescribe();
+			if (  tokens.containsKey( getSharingTableName(sobj) ) || tokens.containsKey('ltngsharing__' + getSharingTableName(sobj)) ) {
+				return true;
+			}
+		} else {
+			string tableName = getSharingTableName(sobj);
+			string query = 'select count() from ' + tableName;
+			try {
+				integer count = database.countQuery(query);
+				if (count > 0) {
+					return true;
+				} else {
+					return false;
+				}
+			} catch (exception e){
+				system.debug(e);
+			}
+			return false;
+		}
+
+		return false;
 	}
 
 }

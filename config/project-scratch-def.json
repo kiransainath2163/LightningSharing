@@ -2,6 +2,7 @@
   "edition": "Developer",
   "hasSampleData" : true,
   "orgPreferences" : {
-    "s1DesktopEnabled" : true
+    "enabled" : ["S1DesktopEnabled"],
+    "disabled" : ["S1EncryptedStoragePref2"]
   }
 }

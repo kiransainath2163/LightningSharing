@@ -1,10 +1,10 @@
-global with sharing class LightningSharing {
+global without sharing class LightningSharing {
 
 	global class SharingPermsException extends Exception{}
 
 	@AuraEnabled
-	public static string sayMyName(id recordId){
-		string nameField;
+	public static String sayMyName(Id recordId){
+		String nameField;
 
 		Schema.SObjectType token = recordId.getSObjectType();
 		for (Schema.SObjectField dfr:token.getDescribe().fields.getMap().values()){
@@ -12,31 +12,31 @@ global with sharing class LightningSharing {
 				nameField = dfr.getDescribe().getName();
 			}
 		}
-		string query = 'select ' + nameField + ' from ' + recordId.getSObjectType() + ' where id = \'' + recordId + '\'';
-		system.debug(query);
+		String query = 'select ' + nameField + ' from ' + recordId.getSObjectType() + ' where id = \'' + recordId + '\'';
+		System.debug(query);
 		recordStuff rs = new recordStuff();
-		rs.recordName = string.valueOf(Database.query(query)[0].get(nameField));
-		rs.objectType = string.valueOf(recordId.getSObjectType().getDescribe().getLabel());
+		rs.recordName = String.valueOf(Database.query(query)[0].get(nameField));
+		rs.objectType = String.valueOf(recordId.getSObjectType().getDescribe().getLabel());
 
 		return JSON.serialize(rs);
 
 	}
 
 	class recordStuff {
-		string recordName {get;set;}
-		string objectType {get;set;}
+		String recordName {get;set;}
+		String objectType {get;set;}
 	}
 
 	@AuraEnabled
-	global static boolean canIEditPerms(id recordId){
+	global static boolean canIEditPerms(Id recordId){
 		try {
-            String query = 'SELECT RecordId, HasDeleteAccess, HasAllAccess FROM UserRecordAccess WHERE RecordId = \'' + String.escapeSingleQuotes(string.valueOf(recordId)) + '\' AND UserId = \'' + UserInfo.getUserId() + '\'';
-            sObject o = Database.query(query);
-            if ((Boolean)o.get('HasDeleteAccess') || (Boolean)o.get('HasAllAccess')){
-                System.Debug('edit allowed because user has full acesss or modify all permissions');
-                return true;
-            }
-		} catch (system.queryException e){
+			String query = 'SELECT RecordId, HasDeleteAccess, HasAllAccess FROM UserRecordAccess WHERE RecordId = \'' + String.escapeSingleQuotes(String.valueOf(recordId)) + '\' AND UserId = \'' + UserInfo.getUserId() + '\'';
+			sObject o = Database.query(query);
+			if ((Boolean)o.get('HasDeleteAccess') || (Boolean)o.get('HasAllAccess')){
+				System.Debug('edit allowed because user has full acesss or modify all permissions');
+				return true;
+			}
+		} catch (System.queryException e){
 			//it's possible you can't even see that record and the queries are null!
 			return false;
 		}
@@ -44,76 +44,76 @@ global with sharing class LightningSharing {
 	}
 
 	@AuraEnabled
-	global static void deletePerm(id UserOrGroupID, id recordId){
+	global static void deletePerm(Id UserOrGroupID, Id recordId){
 		//access check
 		Schema.DescribeSObjectResult describe = getSharingDescribe(recordId);
 
 		//can I delete the sharing objects?
 		if (!describe.isDeletable() || !describe.isAccessible()){
-			throw new AuraHandledException('You don\'t have the proper permissions for ths action');
+			throw new AuraHandledException(Label.LackingPermissions);
 		}
 
-		string query = buildQuery(recordId);
+		String query = buildQuery(recordId);
 		query = query + ' and UserOrGroupID =\''+String.escapeSingleQuotes(UserOrGroupID)+'\'';
-		system.debug(query);
+		System.debug(query);
 
-		list<sobject> existing = database.query(query);
-		system.debug(existing);
+		list<sObject> existing = database.query(query);
+		System.debug(existing);
 		delete existing;
 
 	}
 
 	@AuraEnabled
-	global static string upsertPerm (id UserOrGroupID, id recordId, string level){
+	global static String upsertPerm (Id UserOrGroupID, Id recordId, String level){
 
 		Schema.DescribeSObjectResult describe = getSharingDescribe(recordId);
 		level = String.escapeSingleQuotes(level);
 
 		if (!canIEditPerms(recordId)){
-			throw new AuraHandledException('Only the record owner or administrators can modify permissions');
+			throw new AuraHandledException(Label.OwnerAdminModify);
 		}
-		system.debug('doing perm upsert');
+		System.debug('doing perm upsert');
 
 		// special handling for role => groups
 		if (UserOrGroupID.getSobjectType()==Schema.UserRole.SObjectType){
 			//it's a role...find the matching group?
 			list<group> matchingGroups = [select id, name, type from group where RelatedId =: UserOrGroupID and type = 'Role'];
 			if (matchingGroups.size()>1){
-				throw new AuraHandledException('There are multiple groups for that role');
+				throw new AuraHandledException(Label.MultipleGroupsForRole);
 			}
 			UserOrGroupID = matchingGroups[0].Id;
 		}
 
 
-		string query = buildQuery(recordId);
-		query = query + ' and UserOrGroupID =\''+String.escapeSingleQuotes(string.valueOf(UserOrGroupID))+'\'';
-		system.debug(query);
+		String query = buildQuery(recordId);
+		query = query + ' and UserOrGroupID =\''+String.escapeSingleQuotes(String.valueOf(UserOrGroupID))+'\'';
+		System.debug(query);
 
-		list<sobject> existing = database.query(query);
-		string sobj = objectTypeFromId(recordId);
+		list<sObject> existing = database.query(query);
+		String sobj = objectTypeFromId(recordId);
 
 		if (existing.size() > 0){
-			system.debug('already existing. will update');
+			System.debug('already existing. will update');
 			//can I update this thing?
 
 			if (!describe.isUpdateable() ||
 				!describe.fields.getMap().get(getAccessLevelField(sobj)).getDescribe().isUpdateable()
 				){
-				throw new AuraHandledException('Only the record owner or administrators can modify permissions');
+				throw new AuraHandledException(Label.OwnerAdminModify);
 			}
 
 			existing[0].put(getAccessLevelField(sobj), level);
 			update existing;
 			return JSON.serialize(existing);
 			} else {
-				system.debug('not already existing. will create');
+				System.debug('not already existing. will create');
 				//are we even allowed to insert this?  for these specific fields that we'll set?
 				if (!describe.isCreateable() ||
 						!describe.fields.getMap().get(getAccessLevelField(sobj)).getDescribe().isCreateable() ||
 						!describe.fields.getMap().get(getLookupField(sobj)).getDescribe().isCreateable() ||
 						!describe.fields.getMap().get('UserOrGroupId').getDescribe().isCreateable()
 					 ){
-					throw new AuraHandledException('Only the record owner or administrators can create new permissions');
+					throw new AuraHandledException(Label.OwnerAdminModify);
 				}
 				//create a new SObject dynamically and insert
 				Schema.SObjectType newObj = Schema.getGlobalDescribe().get(getSharingTableName(sobj));
@@ -121,7 +121,7 @@ global with sharing class LightningSharing {
 
 				share.put(getAccessLevelField(sobj), level);
 				share.put(getLookupField(sobj), recordId);
-				share.put('UserOrGroupId', String.escapeSingleQuotes(string.valueOf(UserOrGroupID)));
+				share.put('UserOrGroupId', String.escapeSingleQuotes(String.valueOf(UserOrGroupID)));
 
 				if (objectTypeFromId(recordId)=='Account'){
 					//share.put('ContactAccessLevel', level);
@@ -135,8 +135,8 @@ global with sharing class LightningSharing {
 		return null;
 	}
 
-	@AuraEnabled
-	global static string doSOSL(String searchString, string objectType){
+	@AuraEnabled(cacheable=true)
+	global static String doSOSL(String searchString, String objectType){
 		//Bobby Tables says always sanitize your inputs.
 		searchString = String.escapeSingleQuotes(searchString);
 		objectType = String.escapeSingleQuotes(objectType);
@@ -146,24 +146,24 @@ global with sharing class LightningSharing {
 		Schema.DescribeSObjectResult describe = Schema.getGlobalDescribe().get(objectType).getDescribe();
 		//can I query?
 		if (!describe.isQueryable() || !describe.isAccessible()){
-			throw new AuraHandledException('You don\'t have the proper permissions for ths action');
+			throw new AuraHandledException(Label.LackingPermissions);
 		}
 
 		Map<String, Schema.SObjectField> fieldMap = describe.fields.getMap();
 		for (Schema.SObjectField field:fieldMap.values()){
 			if (field.getDescribe().isNameField()){
 				if (!field.getDescribe().isAccessible()){
-					throw new AuraHandledException('You don\'t have the proper permissions for ths action');
+					throw new AuraHandledException(Label.LackingPermissions);
 				}
 			}
 		}
 
 		// limit rows returned for performance reasons
-		string sosl = 'FIND \'*' + searchString + '*\' IN NAME FIELDS RETURNING ' + getReturning(objectType) + ' limit 200';
+		String sosl = 'FIND \'*' + searchString + '*\' IN NAME FIELDS RETURNING ' + getReturning(objectType) + ' limit 200';
 		list<list<sobject>> results = search.query(sosl);
 
-		list<sobject> output = new list<sobject>();
-		for (list<sobject> result:results){
+		list<sObject> output = new list<sobject>();
+		for (list<sObject> result:results){
 			output.addAll(result);
 		}
 
@@ -171,7 +171,7 @@ global with sharing class LightningSharing {
 	}
 
 	@TestVisible
-	private static string getReturning (string objectType){
+	private static String getReturning (String objectType){
 		//assert that we can use these fields as the current user
 		if (!User.Id.getDescribe().isAccessible() ||
 			  !User.Name.getDescribe().isAccessible() ||
@@ -179,7 +179,7 @@ global with sharing class LightningSharing {
 			  !Group.Id.getDescribe().isAccessible() ||
 			  !Group.Name.getDescribe().isAccessible()
 			){
-			throw new AuraHandledException('You do not have the required permissions for this action');
+			throw new AuraHandledException(Label.LackingPermissions);
 		}
 
 
@@ -197,24 +197,24 @@ global with sharing class LightningSharing {
 
 
 @AuraEnabled
-global static string objectTypeFromId(id recordId){
+global static String objectTypeFromId(Id recordId){
 	Schema.SObjectType token = recordId.getSObjectType();
 	Schema.DescribeSObjectResult dr = token.getDescribe();
 	return dr.getName();
 }
 
 @AuraEnabled
-global static string getSharings(id recordId){
+global static String getSharings(Id recordId){
 
 	if (!canIEditPerms(recordId)){
-		throw new AuraHandledException('Only the record owner or administrators can access permissions');
+		throw new AuraHandledException(Label.OwnerAdminModify);
 	}
 
 	if (!sharingExists(objectTypeFromId(recordId))){
-		throw new AuraHandledException('Sharing Settings must be private or public read/write to enable manual sharing');
+		throw new AuraHandledException(Label.OWDReadWrite);
 	}
 
-	list<sobject> results = database.query(buildQuery(recordId));
+	list<sObject> results = database.query(buildQuery(recordId));
 	list<sharingHolder> output = new list<sharingHolder>();
 
 	set<id> groupAndUserIDs = new set<id>();
@@ -222,9 +222,9 @@ global static string getSharings(id recordId){
 
 	for (sobject so:results){
 		sharingHolder sh = new sharingHolder();
-		sh.RowCause = string.valueOf(so.get('RowCause'));
-		sh.AccessLevel = string.valueOf(so.get(getAccessLevelField(objectTypeFromId(recordId))));
-		sh.UserOrGroupID = string.valueOf(so.get('UserOrGroupID'));
+		sh.RowCause = String.valueOf(so.get('RowCause'));
+		sh.AccessLevel = String.valueOf(so.get(getAccessLevelField(objectTypeFromId(recordId))));
+		sh.UserOrGroupID = String.valueOf(so.get('UserOrGroupID'));
 		groupAndUserIDs.add(sh.UserOrGroupID);
 		output.add(sh);
 	}
@@ -236,16 +236,16 @@ global static string getSharings(id recordId){
 			  !Group.Name.getDescribe().isAccessible() ||
 			  !Group.Type.getDescribe().isAccessible()
 			){
-			throw new AuraHandledException('You do not have the required permissions for this action');
+			throw new AuraHandledException(Label.LackingPermissions);
 		}
-	map<id, user> UserMap = new map<id, user>([select Name, UserType from User where id in: groupAndUserIDs]);
-	map<id, group> GroupMap = new map<id, group>([select Name, Type, RelatedId from Group where id in: groupAndUserIDs]);
+	map<Id, User> UserMap = new map<Id, User>([Select Name, UserType from User where Id in: groupAndUserIDs]);
+	map<Id, Group> GroupMap = new map<Id, Group>([Select Name, Type, RelatedId from Group where Id in: groupAndUserIDs]);
 	for (group g:GroupMap.values()){
 		if (g.RelatedId != null){
 			RoleIds.add(g.RelatedId);
 		}
 	}
-	map<id, UserRole> RoleMap = new map<id, userrole>([select Name from UserRole where id in: RoleIDs]);
+	map<Id, UserRole> RoleMap = new map<Id, UserRole>([Select Name from UserRole where Id in: RoleIDs]);
 
 	for (sharingHolder sh:output){
 		if (UserMap.get(sh.UserOrGroupID)!=null){
@@ -267,8 +267,8 @@ global static string getSharings(id recordId){
 		return JSON.serialize(output);
 	}
 
-	@TestVisible private static string buildQuery(id recordId){
-		string sobj = objectTypeFromId(recordId);
+	@TestVisible private static String buildQuery(Id recordId){
+		String sobj = objectTypeFromId(recordId);
 
 		schema.DescribeSObjectResult describe = getSharingDescribe (recordId);
 
@@ -279,15 +279,15 @@ global static string getSharings(id recordId){
 			  !describe.fields.getMap().get(getAccessLevelField(sobj)).getDescribe().isAccessible() ||
 			  !describe.fields.getMap().get(getLookupField(sobj)).getDescribe().isAccessible()
 			  ){
-			throw new AuraHandledException('You don\'t have the required permissions for this action');
+			throw new AuraHandledException(Label.LackingPermissions);
 		}
 
-		string query = 'select Id, RowCause, UserOrGroupId, ' +getAccessLevelField(sobj)+ ' from ' +getSharingTableName(sobj)+ ' where ' + getLookupField(sobj)+ ' = \'' + String.escapeSingleQuotes(string.valueOf(recordId)) + '\'';
-		system.debug(query);
+		String query = 'select Id, RowCause, UserOrGroupId, ' +getAccessLevelField(sobj)+ ' from ' +getSharingTableName(sobj)+ ' where ' + getLookupField(sobj)+ ' = \'' + String.escapeSingleQuotes(String.valueOf(recordId)) + '\'';
+		System.debug(query);
 		return query;
 	}
 
-	@TestVisible private static string huh(string userType){
+	@TestVisible private static String huh(String userType){
 		if (userType == 'PowerCustomerSuccess') {return 'Customer Plus (with Sharing)';}
 		else if (userType == 'PowerPartner') {return 'Partner';}
 		else if (userType == 'CustomerSuccess') {return 'Customer';}
@@ -297,15 +297,15 @@ global static string getSharings(id recordId){
 	}
 
 	global class sharingHolder {
-		global string UserOrGroupName {get;set;}
-		global string SubType {get;set;}
-		global string UserOrGroupType {get;set;}
-		global string UserOrGroupID {get;set;}
-		global string AccessLevel {get;set;}
-		global string RowCause {get;set;}
+		global String UserOrGroupName {get;set;}
+		global String SubType {get;set;}
+		global String UserOrGroupType {get;set;}
+		global String UserOrGroupID {get;set;}
+		global String AccessLevel {get;set;}
+		global String RowCause {get;set;}
 	}
 
-	private static boolean isStandard (string sobj){
+	private static boolean isStandard (String sobj){
 		if (sobj=='Account' || sobj=='Asset' || sobj=='Campaign' || sobj =='Case' || sobj=='Contact' || sobj=='Lead' || sobj=='Opportunity' || sobj=='User' ){
 			return true;
 		}
@@ -313,7 +313,7 @@ global static string getSharings(id recordId){
 	}
 
 	@TestVisible
-	private static string getLookupField (string sobj){
+	private static String getLookupField (String sobj){
 		if (isStandard(sobj)){
 			return sobj + 'Id';
 		} else {
@@ -322,19 +322,19 @@ global static string getSharings(id recordId){
 	}
 
 	@TestVisible
-	private static string getAccessLevelField (string sobj){
-		system.debug('accesslevelField received sobject type :' + sobj);
+	private static String getAccessLevelField (String sobj){
+		System.debug('accesslevelField received sobject type :' + sobj);
 		if (isStandard(sobj)){
-			system.debug('is a special object');
+			System.debug('is a special object');
 			return sobj + 'AccessLevel';
 		} else {
-			system.debug('is not a special object');
+			System.debug('is not a special object');
 			return 'AccessLevel';
 		}
 	}
 
 	@TestVisible
-	private static string getSharingTableName (string sobj){
+	private static String getSharingTableName (String sobj){
 		if (sobj.contains('__c')){
 			return sobj.replace('__c','__Share');
 		} else {
@@ -343,18 +343,18 @@ global static string getSharings(id recordId){
 	}
 
 	@TestVisible
-	private static schema.DescribeSObjectResult getSharingDescribe (id recordId){
+	private static schema.DescribeSObjectResult getSharingDescribe (Id recordId){
 		try{
-			string sharingName = getSharingTableName(objectTypeFromId(recordId));
+			String sharingName = getSharingTableName(objectTypeFromId(recordId));
 			return Schema.getGlobalDescribe().get(sharingName).getDescribe();
 		} catch (exception e){
 			//probably means they don't have sharing turned on for this object
-			throw new AuraHandledException('There is no sharing table for that object.  Are you SURE you changed the sharing setting to PRIVATE or READ ? ');
+			throw new AuraHandledException(Label.OWDReadWrite);
 		}
 	}
 
 	@TestVisible
-	private static boolean sharingExists(string sobj){
+	private static boolean sharingExists(String sobj){
 		//custom objects
 		if (sobj.contains('__c')){
 			Map<String, Schema.SObjectType> tokens = Schema.getGlobalDescribe();
@@ -362,8 +362,8 @@ global static string getSharings(id recordId){
 				return true;
 			}
 		} else {
-			string tableName = getSharingTableName(sobj);
-			string query = 'select count() from ' + tableName;
+			String tableName = getSharingTableName(sobj);
+			String query = 'select count() from ' + tableName;
 			try {
 				integer count = database.countQuery(query);
 				if (count > 0) {
@@ -372,7 +372,7 @@ global static string getSharings(id recordId){
 					return false;
 				}
 			} catch (exception e){
-				system.debug(e);
+				System.debug(e);
 			}
 			return false;
 		}

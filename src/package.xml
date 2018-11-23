@@ -13,9 +13,17 @@
     <members>TestLightningSharing</members>
   </types>
   <types>
+    <name>CustomLabels</name>
+    <members>CustomLabels</members>
+  </types>
+  <types>
+    <name>CustomLabel</name>
+    <members>*</members>
+  </types>
+  <types>
     <name>CustomObject</name>
     <members>PrivateTestObject__c</members>
     <members>ReadOnlyTestObject__c</members>
   </types>
-  <version>41.0</version>
+  <version>44.0</version>
 </Package>

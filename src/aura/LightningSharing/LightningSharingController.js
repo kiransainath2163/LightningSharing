@@ -34,7 +34,11 @@
 	},
 
 	navToRecord : function(component, event, helper) {
-		helper.nav(component);
+		helper.nav(component, component.get("v.recordId"));
+	},
+
+	navToUser: function (component, event, helper) {
+		helper.nav(component, event.target.id);
 	},
 
 	delete : function(component, event, helper) {
@@ -76,11 +80,16 @@
 	},
 
 	search : function(component, undefined, helper){
-		let searchString = component.find("search").get("v.value");
+		let searchString = component.find("search").get("v.value").trim().replace(/\*/g).toLowerCase();
+
 		if (searchString.length<=2){
 			component.set("v.results", []);
 			return; //too short to search
 		}
+
+		let searchTimeout = component.get('v.searchTimeout');
+
+
 		let searchObject = component.find("searchPicklist").get("v.value");
 		//console.log(searchString);
 		//console.log(searchObject);
@@ -115,6 +124,22 @@
 				appEvent.fire();
 			}
 		});
-		$A.enqueueAction(action);
+
+		if (searchTimeout) {
+			clearTimeout(searchTimeout);
+		}
+
+		searchTimeout = window.setTimeout(
+			$A.getCallback(() => {
+				// Send search request
+				$A.enqueueAction(action);
+				// Clear timeout
+				component.set('v.searchTimeout', null);
+			}),
+			300 // Wait for 300 ms before sending search request
+		);
+
+		component.set('v.searchTimeout', searchTimeout);
+
 	}
 })

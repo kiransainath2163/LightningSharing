@@ -10,11 +10,13 @@
 	<aura:attribute name="searchString" type="String" />
 	<aura:attribute name="selectedSharee" type="String" />
 
-
 	<aura:attribute name="results" type="object[]" />
+	<aura:attribute name="searchTimeout" type="object" />
 	<aura:attribute name="perm" type="string" default="Read/Write"/>
 
 	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	<aura:handler name="change" value="{!v.pageReference}" action="{!c.doInit}" />
+
 	<aura:registerEvent name="handleCallbackError" type="c:handleCallbackError"/>
 	<c:LightningErrorHandler />
 	<aura:handler event="c:handleCallbackError" action="{!c.stopProp}" phase="bubble"  />
@@ -24,7 +26,7 @@
 	<!--icons at https://www.lightningdesignsystem.com/icons/ -->
 	<lightning:card title="{!v.sObjectName + ' : ' + v.recordName}" variant="base">
 		<aura:set attribute="actions">
-			<lightning:button onclick="{!c.navToRecord}"  label="Back" title="{!'Return to ' + v.recordName}" />
+			<lightning:button onclick="{!c.navToRecord}"  label="{!$Label.ltngsharing.Back}" title="{!'Return to ' + v.recordName}" />
 		</aura:set>
 		<aura:set attribute="footer">
 			<!--footer markup-->
@@ -32,25 +34,25 @@
 		<div class="slds-p-horizontal_medium">
 			<lightning:tabset>
 				<lightning:tab>
-					<aura:set attribute="label">View/Edit Current Permissions</aura:set>
+					<aura:set attribute="label">{!$Label.ltngsharing.ViewCurrentPermissions}</aura:set>
 					<div class="sls-p-around--medium">
 						<table class="slds-table slds-table_bordered slds-no-row-hover slds-table_cell-buffer">
 							<thead>
 								<tr>
 									<th class="slds-text-heading_label" scope="col">
-										<div class="slds-truncate">User or Group</div>
+										<div class="slds-truncate">{!$Label.ltngsharing.UserOrGroup}</div>
 									</th>
 									<th class="slds-text-heading_label" scope="col">
-										<div class="slds-truncate">Type</div>
+										<div class="slds-truncate">{!$Label.ltngsharing.Type}</div>
 									</th>
 									<th class="slds-text-heading_label" scope="col">
-										<div class="slds-truncate">Name</div>
+										<div class="slds-truncate">{!$Label.ltngsharing.Name}</div>
 									</th>
 									<th class="slds-text-heading_label" scope="col">
-										<div class="slds-truncate">Access Level</div>
+										<div class="slds-truncate">{!$Label.ltngsharing.AccessLevel}</div>
 									</th>
 									<th class="slds-text-heading_label" scope="col">
-										<div class="slds-truncate">Reason</div>
+										<div class="slds-truncate">{!$Label.ltngsharing.Reason}</div>
 									</th>
 									<th></th>
 								</tr>
@@ -59,10 +61,10 @@
 								<aura:iteration items="{!v.shares}" var="share">
 									<tr class="slds-hint-parent">
 
-										<td data-label="User or Group">{!share.UserOrGroupType}</td>
-										<td data-label="Type">{!share.SubType}</td>
-										<td data-label="Name">
-											<a onclick="{!c.selectRecord}" id="{!share.UserOrGroupID}">
+										<td data-label="{!$Label.ltngsharing.UserOrGroup}">{!share.UserOrGroupType}</td>
+										<td data-label="{!$Label.ltngsharing.Type}">{!share.SubType}</td>
+										<td data-label="{!$Label.ltngsharing.Name}">
+											<a onclick="{!c.navToUser}" id="{!share.UserOrGroupID}">
 												{!share.UserOrGroupName}
 											</a>
 										</td>
@@ -70,17 +72,17 @@
 											{!share.AccessLevel}
 
 										</td>
-										<td data-label="Reason">{!share.RowCause}</td>
+										<td data-label="{!$Label.ltngsharing.Reason}">{!share.RowCause}</td>
 										<td>
 											<aura:if isTrue="{!share.RowCause=='Manual'}">
 												<a onclick="{!c.setRead}" id="{!share.UserOrGroupID}" class="slds-button slds-button_neutral">
-													Read
+													{!$Label.ltngsharing.Read}
 												</a>
 												<a onclick="{!c.setReadWrite}" id="{!share.UserOrGroupID}" class="slds-button slds-button_neutral">
-													Read/Write
+													{!$Label.ltngsharing.ReadWrite}
 												</a>
 												<a onclick="{!c.delete}" id="{!share.UserOrGroupID}" class="slds-button slds-button_neutral">
-													Delete
+													{!$Label.ltngsharing.Delete}
 												</a>
 											</aura:if>
 										</td>
@@ -91,22 +93,22 @@
 					</div>
 				</lightning:tab>
 				<lightning:tab>
-					<aura:set attribute="label">Add New Permission</aura:set>
+					<aura:set attribute="label">{!$Label.ltngsharing.AddNewPermission}</aura:set>
 
 					<lightning:layout class="slds-box slds-theme_shade">
 						<lightning:layoutItem padding="around-small" flexibility="grow">
-							<lightning:select aura:id="searchPicklist" name="select1" label="Search" value="{!v.searchObject}">
-								<option value="group">Public Groups</option>
-								<option value="userrole">Roles</option>
-								<option value="user">Users</option>
+							<lightning:select aura:id="searchPicklist" name="select1" label="{!$Label.ltngsharing.Search}" value="{!v.searchObject}">
+								<option value="group">{!$Label.ltngsharing.PublicGroups}</option>
+								<option value="userrole">{!$Label.ltngsharing.Roles}</option>
+								<option value="user">{!$Label.ltngsharing.Users}</option>
 							</lightning:select>
 						</lightning:layoutItem>
 
 						<lightning:layoutItem padding="around-small" flexibility="grow">
-							<lightning:input aura:id="search" name="for" value="{!v.searchString}" label="For" type="search" onchange="{!c.search}" placeholder="type at least 3 characters to see results"
+							<lightning:input aura:id="search" name="for" value="{!v.searchString}" label="For" type="search" onchange="{!c.search}" placeholder="{!$Label.ltngsharing.Type3}"
 							/>
 							<aura:if isTrue="{!v.results.length >= 199 }">
-								Your search found more than 200 results. Keep typing to make it more specific.
+								{!$Label.ltngsharing.TooManyResultsMessage}
 							</aura:if>
 						</lightning:layoutItem>
 					</lightning:layout>
@@ -118,10 +120,10 @@
 							<thead>
 								<tr>
 									<th class="slds-text-heading_label" scope="col">
-										<div class="slds-truncate">Name</div>
+										<div class="slds-truncate">{!$Label.ltngsharing.Name}</div>
 									</th>
 									<th class="slds-text-heading_label" scope="col">
-										<div class="slds-truncate">Set Access Level</div>
+										<div class="slds-truncate">{!$Label.ltngsharing.SetAccessLevel}</div>
 									</th>
 								</tr>
 							</thead>
@@ -129,17 +131,17 @@
 								<aura:iteration items="{!v.results}" var="result">
 									<tr class="slds-hint-parent">
 
-										<td data-label="Name">{!result.Name}
+										<td data-label="{!$Label.ltngsharing.Name}">{!result.Name}
 											<aura:if isTrue="{!result.Type}">
 												({!result.Type})
 											</aura:if>
 										</td>
-										<td data-label="Level">
+										<td data-label="{!$Label.ltngsharing.AccessLevel}">
 											<a onclick="{!c.setRead}" id="{!result.Id}" class="slds-button slds-button_neutral">
-												Read
+												{!$Label.ltngsharing.Read}
 											</a>
 											<a onclick="{!c.setReadWrite}" id="{!result.Id}" class="slds-button slds-button_neutral">
-												Read/Write
+												{!$Label.ltngsharing.ReadWrite}
 											</a>
 										</td>
 									</tr>

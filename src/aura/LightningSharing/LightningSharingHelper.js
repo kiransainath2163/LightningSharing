@@ -1,11 +1,11 @@
 ({
 
-	nav : function (component) {
+	nav : function (component, recordId) {
 
 		component.find("navService").navigate({
 			type: 'standard__recordPage',
 			attributes: {
-				recordId: component.get("v.recordId"),
+				recordId: recordId,
 				actionName: "view"
 			}
 		});

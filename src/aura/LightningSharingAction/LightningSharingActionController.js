@@ -9,8 +9,7 @@
 			state: {
 				"c__recordId": component.get('v.recordId')
 			}
-		}, true);
-		$A.get("e.force:closeQuickAction").fire();
+		});
 	}
 
 })

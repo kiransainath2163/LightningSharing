@@ -80,7 +80,7 @@
 	},
 
 	search : function(component, undefined, helper){
-		let searchString = component.find("search").get("v.value");
+		let searchString = component.find("search").get("v.value").trim().replace(/\*/g).toLowerCase();
 		if (searchString.length<=2){
 			component.set("v.results", []);
 			return; //too short to search

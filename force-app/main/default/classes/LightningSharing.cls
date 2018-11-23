@@ -30,12 +30,12 @@ global without sharing class LightningSharing {
 	@AuraEnabled
 	global static boolean canIEditPerms(Id recordId){
 		try {
-            String query = 'SELECT RecordId, HasDeleteAccess, HasAllAccess FROM UserRecordAccess WHERE RecordId = \'' + String.escapeSingleQuotes(String.valueOf(recordId)) + '\' AND UserId = \'' + UserInfo.getUserId() + '\'';
-            sObject o = Database.query(query);
-            if ((Boolean)o.get('HasDeleteAccess') || (Boolean)o.get('HasAllAccess')){
-                System.Debug('edit allowed because user has full acesss or modify all permissions');
-                return true;
-            }
+			String query = 'SELECT RecordId, HasDeleteAccess, HasAllAccess FROM UserRecordAccess WHERE RecordId = \'' + String.escapeSingleQuotes(String.valueOf(recordId)) + '\' AND UserId = \'' + UserInfo.getUserId() + '\'';
+			sObject o = Database.query(query);
+			if ((Boolean)o.get('HasDeleteAccess') || (Boolean)o.get('HasAllAccess')){
+				System.Debug('edit allowed because user has full acesss or modify all permissions');
+				return true;
+			}
 		} catch (System.queryException e){
 			//it's possible you can't even see that record and the queries are null!
 			return false;

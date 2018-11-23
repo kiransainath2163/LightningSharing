@@ -34,7 +34,11 @@
 	},
 
 	navToRecord : function(component, event, helper) {
-		helper.nav(component);
+		helper.nav(component, component.get("v.recorId"));
+	},
+
+	navToUser: function (component, event, helper) {
+		helper.nav(component, event.target.id);
 	},
 
 	delete : function(component, event, helper) {

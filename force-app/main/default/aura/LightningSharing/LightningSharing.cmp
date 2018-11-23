@@ -62,7 +62,7 @@
 										<td data-label="User or Group">{!share.UserOrGroupType}</td>
 										<td data-label="Type">{!share.SubType}</td>
 										<td data-label="Name">
-											<a onclick="{!c.selectRecord}" id="{!share.UserOrGroupID}">
+											<a onclick="{!c.navToUser}" id="{!share.UserOrGroupID}">
 												{!share.UserOrGroupName}
 											</a>
 										</td>

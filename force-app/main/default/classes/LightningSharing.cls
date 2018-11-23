@@ -135,7 +135,7 @@ global without sharing class LightningSharing {
 		return null;
 	}
 
-	@AuraEnabled
+	@AuraEnabled(cacheable=true)
 	global static String doSOSL(String searchString, String objectType){
 		//Bobby Tables says always sanitize your inputs.
 		searchString = String.escapeSingleQuotes(searchString);

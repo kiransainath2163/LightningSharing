@@ -10,8 +10,8 @@
 	<aura:attribute name="searchString" type="String" />
 	<aura:attribute name="selectedSharee" type="String" />
 
-
 	<aura:attribute name="results" type="object[]" />
+	<aura:attribute name="searchTimeout" type="object" />
 	<aura:attribute name="perm" type="string" default="Read/Write"/>
 
 	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>

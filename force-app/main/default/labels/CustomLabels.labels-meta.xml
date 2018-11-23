@@ -27,6 +27,15 @@
     </labels>
 
     <labels>
+        <fullName>Type3</fullName>
+        <categories>messages</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Type3</shortDescription>
+        <value>Type at least 3 characters to see results</value>
+    </labels>
+
+    <labels>
         <fullName>LackingPermissions</fullName>
         <categories>messages</categories>
         <language>en_US</language>
@@ -85,6 +94,14 @@
         <value>Read / Write</value>
     </labels>
     <labels>
+        <fullName>Delete</fullName>
+        <categories>labels, buttons</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delete</shortDescription>
+        <value>Delete</value>
+    </labels>
+    <labels>
         <fullName>Reason</fullName>
         <categories>labels</categories>
         <language>en_US</language>
@@ -117,6 +134,14 @@
         <value>Type</value>
     </labels>
     <labels>
+        <fullName>Back</fullName>
+        <categories>Buttons,Filters,Title</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Back</shortDescription>
+        <value>Back</value>
+    </labels>
+    <labels>
         <fullName>UserOrGroup</fullName>
         <categories>labels</categories>
         <language>en_US</language>
@@ -131,5 +156,38 @@
         <protected>false</protected>
         <shortDescription>ViewCurrentPermissions</shortDescription>
         <value>View/Edit Current Permissions</value>
+    </labels>
+    <labels>
+        <fullName>SetAccessLevel</fullName>
+        <categories>labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SetAccessLevel</shortDescription>
+        <value>Set Access Level</value>
+    </labels>
+
+    <labels>
+        <fullName>PublicGroups</fullName>
+        <categories>labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PublicGroups</shortDescription>
+        <value>Public Groups</value>
+    </labels>
+    <labels>
+        <fullName>Roles</fullName>
+        <categories>labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Roles</shortDescription>
+        <value>Roles</value>
+    </labels>
+    <labels>
+        <fullName>Users</fullName>
+        <categories>labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Users</shortDescription>
+        <value>Users</value>
     </labels>
 </CustomLabels>

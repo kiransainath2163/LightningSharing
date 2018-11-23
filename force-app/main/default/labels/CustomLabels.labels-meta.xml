@@ -8,6 +8,14 @@
         <shortDescription>TooManyResultsMessage</shortDescription>
         <value>Your search found more than 200 results.  Keep typing to make it more specific</value>
     </labels>
+    <labels>
+        <fullName>OWDReadWrite</fullName>
+        <categories>messages</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OWDReadWrite</shortDescription>
+        <value>Sharing Settings must be private or public read/write to enable manual sharing</value>
+    </labels>
 
     <labels>
         <fullName>MultipleGroupsForRole</fullName>

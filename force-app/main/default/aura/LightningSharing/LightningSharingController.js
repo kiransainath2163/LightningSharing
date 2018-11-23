@@ -34,7 +34,7 @@
 	},
 
 	navToRecord : function(component, event, helper) {
-		helper.nav(component, component.get("v.recorId"));
+		helper.nav(component, component.get("v.recordId"));
 	},
 
 	navToUser: function (component, event, helper) {

@@ -57,7 +57,7 @@ global with sharing class LightningSharing {
 		query = query + ' and UserOrGroupID =\''+String.escapeSingleQuotes(UserOrGroupID)+'\'';
 		System.debug(query);
 
-		list<sobject> existing = database.query(query);
+		list<sObject> existing = database.query(query);
 		System.debug(existing);
 		delete existing;
 
@@ -89,7 +89,7 @@ global with sharing class LightningSharing {
 		query = query + ' and UserOrGroupID =\''+String.escapeSingleQuotes(String.valueOf(UserOrGroupID))+'\'';
 		System.debug(query);
 
-		list<sobject> existing = database.query(query);
+		list<sObject> existing = database.query(query);
 		String sobj = objectTypeFromId(recordId);
 
 		if (existing.size() > 0){
@@ -162,8 +162,8 @@ global with sharing class LightningSharing {
 		String sosl = 'FIND \'*' + searchString + '*\' IN NAME FIELDS RETURNING ' + getReturning(objectType) + ' limit 200';
 		list<list<sobject>> results = search.query(sosl);
 
-		list<sobject> output = new list<sobject>();
-		for (list<sobject> result:results){
+		list<sObject> output = new list<sobject>();
+		for (list<sObject> result:results){
 			output.addAll(result);
 		}
 
@@ -214,7 +214,7 @@ global static String getSharings(Id recordId){
 		throw new AuraHandledException('Sharing Settings must be private or public read/write to enable manual sharing');
 	}
 
-	list<sobject> results = database.query(buildQuery(recordId));
+	list<sObject> results = database.query(buildQuery(recordId));
 	list<sharingHolder> output = new list<sharingHolder>();
 
 	set<id> groupAndUserIDs = new set<id>();

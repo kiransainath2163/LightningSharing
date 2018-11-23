@@ -50,7 +50,7 @@ global without sharing class LightningSharing {
 
 		//can I delete the sharing objects?
 		if (!describe.isDeletable() || !describe.isAccessible()){
-			throw new AuraHandledException('You don\'t have the proper permissions for ths action');
+			throw new AuraHandledException(Label.LackingPermissions);
 		}
 
 		String query = buildQuery(recordId);
@@ -70,7 +70,7 @@ global without sharing class LightningSharing {
 		level = String.escapeSingleQuotes(level);
 
 		if (!canIEditPerms(recordId)){
-			throw new AuraHandledException('Only the record owner or administrators can modify permissions');
+			throw new AuraHandledException(Label.OwnerAdminModify);
 		}
 		System.debug('doing perm upsert');
 
@@ -79,7 +79,7 @@ global without sharing class LightningSharing {
 			//it's a role...find the matching group?
 			list<group> matchingGroups = [select id, name, type from group where RelatedId =: UserOrGroupID and type = 'Role'];
 			if (matchingGroups.size()>1){
-				throw new AuraHandledException('There are multiple groups for that role');
+				throw new AuraHandledException(Label.MultipleGroupsForRole);
 			}
 			UserOrGroupID = matchingGroups[0].Id;
 		}
@@ -99,7 +99,7 @@ global without sharing class LightningSharing {
 			if (!describe.isUpdateable() ||
 				!describe.fields.getMap().get(getAccessLevelField(sobj)).getDescribe().isUpdateable()
 				){
-				throw new AuraHandledException('Only the record owner or administrators can modify permissions');
+				throw new AuraHandledException(Label.OwnerAdminModify);
 			}
 
 			existing[0].put(getAccessLevelField(sobj), level);
@@ -113,7 +113,7 @@ global without sharing class LightningSharing {
 						!describe.fields.getMap().get(getLookupField(sobj)).getDescribe().isCreateable() ||
 						!describe.fields.getMap().get('UserOrGroupId').getDescribe().isCreateable()
 					 ){
-					throw new AuraHandledException('Only the record owner or administrators can create new permissions');
+					throw new AuraHandledException(Label.OwnerAdminModify);
 				}
 				//create a new SObject dynamically and insert
 				Schema.SObjectType newObj = Schema.getGlobalDescribe().get(getSharingTableName(sobj));
@@ -146,14 +146,14 @@ global without sharing class LightningSharing {
 		Schema.DescribeSObjectResult describe = Schema.getGlobalDescribe().get(objectType).getDescribe();
 		//can I query?
 		if (!describe.isQueryable() || !describe.isAccessible()){
-			throw new AuraHandledException('You don\'t have the proper permissions for ths action');
+			throw new AuraHandledException(Label.LackingPermissions);
 		}
 
 		Map<String, Schema.SObjectField> fieldMap = describe.fields.getMap();
 		for (Schema.SObjectField field:fieldMap.values()){
 			if (field.getDescribe().isNameField()){
 				if (!field.getDescribe().isAccessible()){
-					throw new AuraHandledException('You don\'t have the proper permissions for ths action');
+					throw new AuraHandledException(Label.LackingPermissions);
 				}
 			}
 		}
@@ -179,7 +179,7 @@ global without sharing class LightningSharing {
 			  !Group.Id.getDescribe().isAccessible() ||
 			  !Group.Name.getDescribe().isAccessible()
 			){
-			throw new AuraHandledException('You do not have the required permissions for this action');
+			throw new AuraHandledException(Label.LackingPermissions);
 		}
 
 
@@ -207,11 +207,11 @@ global static String objectTypeFromId(Id recordId){
 global static String getSharings(Id recordId){
 
 	if (!canIEditPerms(recordId)){
-		throw new AuraHandledException('Only the record owner or administrators can access permissions');
+		throw new AuraHandledException(Label.OwnerAdminModify);
 	}
 
 	if (!sharingExists(objectTypeFromId(recordId))){
-		throw new AuraHandledException('Sharing Settings must be private or public read/write to enable manual sharing');
+		throw new AuraHandledException(Label.OWDReadWrite);
 	}
 
 	list<sObject> results = database.query(buildQuery(recordId));
@@ -236,7 +236,7 @@ global static String getSharings(Id recordId){
 			  !Group.Name.getDescribe().isAccessible() ||
 			  !Group.Type.getDescribe().isAccessible()
 			){
-			throw new AuraHandledException('You do not have the required permissions for this action');
+			throw new AuraHandledException(Label.LackingPermissions);
 		}
 	map<Id, User> UserMap = new map<Id, User>([Select Name, UserType from User where Id in: groupAndUserIDs]);
 	map<Id, Group> GroupMap = new map<Id, Group>([Select Name, Type, RelatedId from Group where Id in: groupAndUserIDs]);
@@ -279,7 +279,7 @@ global static String getSharings(Id recordId){
 			  !describe.fields.getMap().get(getAccessLevelField(sobj)).getDescribe().isAccessible() ||
 			  !describe.fields.getMap().get(getLookupField(sobj)).getDescribe().isAccessible()
 			  ){
-			throw new AuraHandledException('You don\'t have the required permissions for this action');
+			throw new AuraHandledException(Label.LackingPermissions);
 		}
 
 		String query = 'select Id, RowCause, UserOrGroupId, ' +getAccessLevelField(sobj)+ ' from ' +getSharingTableName(sobj)+ ' where ' + getLookupField(sobj)+ ' = \'' + String.escapeSingleQuotes(String.valueOf(recordId)) + '\'';
@@ -349,7 +349,7 @@ global static String getSharings(Id recordId){
 			return Schema.getGlobalDescribe().get(sharingName).getDescribe();
 		} catch (exception e){
 			//probably means they don't have sharing turned on for this object
-			throw new AuraHandledException('There is no sharing table for that object.  Are you SURE you changed the sharing setting to PRIVATE or READ ? ');
+			throw new AuraHandledException(Label.OWDReadWrite);
 		}
 	}
 

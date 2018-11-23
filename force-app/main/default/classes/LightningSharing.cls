@@ -206,10 +206,6 @@ global static String objectTypeFromId(Id recordId){
 @AuraEnabled
 global static String getSharings(Id recordId){
 
-	if (!canIEditPerms(recordId)){
-		throw new AuraHandledException(Label.OwnerAdminModify);
-	}
-
 	if (!sharingExists(objectTypeFromId(recordId))){
 		throw new AuraHandledException(Label.OWDReadWrite);
 	}

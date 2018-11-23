@@ -1,4 +1,4 @@
-global with sharing class LightningSharing {
+global without sharing class LightningSharing {
 
 	global class SharingPermsException extends Exception{}
 

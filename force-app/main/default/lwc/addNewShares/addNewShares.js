@@ -3,6 +3,8 @@ import Search from '@salesforce/label/c.Search';
 import PublicGroups from '@salesforce/label/c.PublicGroups';
 import Roles from '@salesforce/label/c.Roles';
 import Users from '@salesforce/label/c.Users';
+import TooManyResultsMessage from '@salesforce/label/c.TooManyResultsMessage';
+import Type3 from '@salesforce/label/c.TooManyResultsMessage';
 
 import getSharings from '@salesforce/apex/LightningSharing.getSharings';
 import doSOSL from '@salesforce/apex/LightningSharing.doSOSL';
@@ -19,8 +21,15 @@ import {
 export default class AddNewShares extends LightningElement {
   @api recordId;
   @track label = {
-    Search
+    Search,
+    TooManyResultsMessage,
+    Type3
   };
+  @track searchString = '';
+
+  get tooManyResults() {
+    return this.searchResults.length > 199;
+  }
 
   // call this when you know the sharing table is out of sync
   @api refresh() {
@@ -40,6 +49,8 @@ export default class AddNewShares extends LightningElement {
   columns = [{ label: 'Name', fieldName: 'Name' }].concat(sharingButtonColumns);
 
   @track searchResults = [];
+  @track searchDisabled = false;
+
   existingShares = [];
 
   @wire(getSharings, { recordId: '$recordId' })
@@ -63,21 +74,14 @@ export default class AddNewShares extends LightningElement {
     // TODO: how clear the search box
   }
 
-  async search(event) {
+  async actuallySearch() {
+    console.log('actually searching!');
     this.searchResults = [];
-    // verify length
-    const searchString = event.detail.value
-      .trim()
-      .replace(/\*/g)
-      .toLowerCase();
-
-    if (searchString.length <= 2) {
-      return;
-    }
+    this.searchDisabled = true;
 
     const results = JSON.parse(
       await doSOSL({
-        searchString,
+        searchString: this.searchString,
         objectType: this._selectedType
       })
     );
@@ -85,7 +89,6 @@ export default class AddNewShares extends LightningElement {
     console.log(results);
     const finalResults = [];
 
-    //TODO: compare to existing shares to highlight+disable buttons
     results.forEach(result => {
       // make some types a bit nicer
       if (this._selectedType === 'user') {
@@ -100,6 +103,27 @@ export default class AddNewShares extends LightningElement {
 
     this.searchResults = finalResults;
     this.updateSharingLevelButtons();
+    this.searchDisabled = false;
+  }
+
+  searchEventHandler(event) {
+    const searchString = event.detail.value
+      .trim()
+      .replace(/\*/g)
+      .toLowerCase();
+
+    if (searchString.length <= 2) {
+      return;
+    }
+
+    this.searchString = searchString;
+  }
+
+  listenForEnter(event) {
+    console.log(event.code);
+    if (event.code === 'Enter') {
+      this.actuallySearch();
+    }
   }
 
   updateSharingLevelButtons() {
@@ -152,5 +176,4 @@ export default class AddNewShares extends LightningElement {
       return userType;
     }
   }
-
 }

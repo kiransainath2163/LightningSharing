@@ -6,9 +6,7 @@ import BackButton from '@salesforce/label/c.Back';
 import ViewCurrentPermissions from '@salesforce/label/c.ViewCurrentPermissions';
 import AddNewPermission from '@salesforce/label/c.AddNewPermission';
 
-export default class LightningSharingWrapper extends NavigationMixin(
-  LightningElement
-) {
+export default class LightningSharingWrapper extends NavigationMixin( LightningElement ) {
   @api recordId;
 
   @track cardTitle = '';

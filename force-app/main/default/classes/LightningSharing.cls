@@ -3,31 +3,6 @@ global without sharing class LightningSharing {
 	global class SharingPermsException extends Exception{}
 
 	@AuraEnabled
-	public static String sayMyName(Id recordId){
-		String nameField;
-
-		Schema.SObjectType token = recordId.getSObjectType();
-		for (Schema.SObjectField dfr:token.getDescribe().fields.getMap().values()){
-			if (dfr.getDescribe().isNameField()){
-				nameField = dfr.getDescribe().getName();
-			}
-		}
-		String query = 'select ' + nameField + ' from ' + recordId.getSObjectType() + ' where id = \'' + recordId + '\'';
-		System.debug(query);
-		recordStuff rs = new recordStuff();
-		rs.recordName = String.valueOf(Database.query(query)[0].get(nameField));
-		rs.objectType = String.valueOf(recordId.getSObjectType().getDescribe().getLabel());
-
-		return JSON.serialize(rs);
-
-	}
-
-	class recordStuff {
-		String recordName {get;set;}
-		String objectType {get;set;}
-	}
-
-	@AuraEnabled
 	global static boolean canIEditPerms(Id recordId){
 		try {
 			String query = 'SELECT RecordId, HasDeleteAccess, HasAllAccess FROM UserRecordAccess WHERE RecordId = \'' + String.escapeSingleQuotes(String.valueOf(recordId)) + '\' AND UserId = \'' + UserInfo.getUserId() + '\'';
@@ -194,10 +169,7 @@ global without sharing class LightningSharing {
 		}
 	}
 
-
-
-@AuraEnabled
-global static String objectTypeFromId(Id recordId){
+private static String objectTypeFromId(Id recordId){
 	Schema.SObjectType token = recordId.getSObjectType();
 	Schema.DescribeSObjectResult dr = token.getDescribe();
 	return dr.getName();

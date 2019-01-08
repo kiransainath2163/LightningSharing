@@ -78,13 +78,21 @@ export default class ExistingShares extends NavigationMixin(LightningElement) {
         this.refresh();
         break;
       case 'read':
-        await shareUpdate( event.detail.row.UserOrGroupID, this.recordId, 'Read' );
+        await shareUpdate(
+          event.detail.row.UserOrGroupID,
+          this.recordId,
+          'Read'
+        );
         this.refresh();
         // await this.updateShares(event.detail.row, 'Read');
         break;
       case 'read_write':
         // await this.updateShares(event.detail.row, 'Edit');
-        await shareUpdate( event.detail.row.UserOrGroupID, this.recordId, 'Edit' );
+        await shareUpdate(
+          event.detail.row.UserOrGroupID,
+          this.recordId,
+          'Edit'
+        );
         this.refresh();
         break;
     }
@@ -102,7 +110,19 @@ export default class ExistingShares extends NavigationMixin(LightningElement) {
         }
       });
     } else if (row.UserOrGroupType === 'Group') {
-      console.error('group routing not implemented yet');
+      //https://force-ruby-1598-dev-ed.lightning.force.com/lightning/setup/PublicGroups/page?address=%2Fsetup%2Fown%2Fgroupdetail.jsp%3Fid%3D00G9A0000011x6u
+      const url = `/lightning/setup/PublicGroups/page?address=%2Fsetup%2Fown%2Fgroupdetail.jsp%3Fid%3D${
+        row.UserOrGroupID
+      }`;
+      console.error(`group: ${url}`);
+      this[NavigationMixin.Navigate]({
+        type: 'standard__webPage',
+        attributes: {
+          url
+        }
+      });
+    } else if (row.UserOrGroupType === 'UserRole') {
+      console.error('role routing not implemented yet');
     }
   }
 }

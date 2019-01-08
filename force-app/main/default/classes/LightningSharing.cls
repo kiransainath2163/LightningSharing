@@ -28,6 +28,16 @@ global without sharing class LightningSharing {
 			throw new AuraHandledException(Label.LackingPermissions);
 		}
 
+		// special handling for role => groups
+		if (UserOrGroupID.getSobjectType()==Schema.UserRole.SObjectType){
+			//it's a role...find the matching group?
+			list<group> matchingGroups = [select id, name, type from group where RelatedId =: UserOrGroupID and type = 'Role'];
+			if (matchingGroups.size()>1){
+				throw new AuraHandledException(Label.MultipleGroupsForRole);
+			}
+			UserOrGroupID = matchingGroups[0].Id;
+		}
+
 		String query = buildQuery(recordId);
 		query = query + ' and UserOrGroupID =\''+String.escapeSingleQuotes(UserOrGroupID)+'\'';
 		System.debug(query);

@@ -121,8 +121,16 @@ export default class ExistingShares extends NavigationMixin(LightningElement) {
           url
         }
       });
-    } else if (row.UserOrGroupType === 'UserRole') {
-      console.error('role routing not implemented yet');
+    } else if (row.RoleId) {
+      // https://force-ruby-1598-dev-ed.lightning.force.com/lightning/setup/Roles/page?address=%2F00E9A000000Ds2M%3Fsetupid%3DRoles
+      const url = `/lightning/setup/Roles/page?address=%2F${row.RoleId}%3Fsetupid%3DRoles`;
+      console.error(`group: ${url}`);
+      this[NavigationMixin.Navigate]({
+        type: 'standard__webPage',
+        attributes: {
+          url
+        }
+      });
     }
   }
 }

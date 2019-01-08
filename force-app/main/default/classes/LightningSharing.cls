@@ -228,6 +228,7 @@ global static String getSharings(Id recordId){
 				//special handling for roles
 				if (sh.SubType.contains('Role')){
 					sh.UserOrGroupName = RoleMap.get(GroupMap.get(sh.UserOrGroupID).RelatedId).Name;
+					sh.RoleId = GroupMap.get(sh.UserOrGroupID).RelatedId;
 				}
 			}
 		}
@@ -271,6 +272,7 @@ global static String getSharings(Id recordId){
 		global String UserOrGroupID {get;set;}
 		global String AccessLevel {get;set;}
 		global String RowCause {get;set;}
+		global String RoleId {get;set;}
 	}
 
 	private static boolean isStandard (String sobj){

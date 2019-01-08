@@ -35,6 +35,7 @@ const sharingButtonColumns = [
 ];
 
 const buttonStylingSingle = existing => {
+  // CEO ID: 00G9A0000011wy7UAA
   if (existing && existing.RowCause === 'Owner') {
     return {
       readDisabled: true,
@@ -63,7 +64,8 @@ const buttonStylingSingle = existing => {
 };
 
 const buttonStyling = (id, existingShares) => {
-  const existing = existingShares.find(share => share.UserOrGroupID === id);
+  // it could be a group or a role on a group
+  const existing = existingShares.find(share => share.UserOrGroupID === id || share.RoleId === id);
   return buttonStylingSingle(existing);
 };
 

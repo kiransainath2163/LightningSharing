@@ -92,9 +92,7 @@ export default class AddNewShares extends LightningElement {
     results.forEach(result => {
       // make some types a bit nicer
       if (this._selectedType === 'user') {
-        result.Name = `${result.Name} (${this.translateTypes(
-          result.UserType
-        )})`;
+        result.Name = `${result.Name} (${this.translateTypes( result.UserType )})`;
       } else if (this._selectedType === 'group') {
         result.Name = `${result.Name} (${this.translateTypes(result.Type)})`;
       }

@@ -105,32 +105,4 @@ export default class ExistingShares extends NavigationMixin(LightningElement) {
       console.error('group routing not implemented yet');
     }
   }
-
-  // async deleteShare(row) {
-  //   try {
-  //     const apexResults = await deletePerm({
-  //       UserOrGroupID: row.UserOrGroupID,
-  //       recordId: this.recordId
-  //     });
-  //     console.log(apexResults);
-  //     // return refreshApex(this._refreshable);
-  //     this.refresh();
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // }
-
-  // async updateShares(row, level) {
-  //   try {
-  //     const apexResults = await upsertPerm({
-  //       UserOrGroupID: row.UserOrGroupID,
-  //       recordId: this.recordId,
-  //       level
-  //     });
-  //     console.log(apexResults);
-  //     this.refresh();
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // }
 }

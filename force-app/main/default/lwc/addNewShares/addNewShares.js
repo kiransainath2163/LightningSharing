@@ -95,7 +95,7 @@ export default class AddNewShares extends LightningElement {
         result.Name = `${result.Name} (${this.translateTypes(
           result.UserType
         )})`;
-      } else {
+      } else if (this._selectedType === 'group') {
         result.Name = `${result.Name} (${this.translateTypes(result.Type)})`;
       }
       finalResults.push(result);

@@ -2,25 +2,25 @@
     "records": [
         {
             "attributes": {
-                "type": "ltngsharing__PrivateTestObject__c",
+                "type": "PrivateTestObject__c",
                 "referenceId": "PrivateTestObject__cRef1"
             }
         },
         {
             "attributes": {
-                "type": "ltngsharing__PrivateTestObject__c",
+                "type": "PrivateTestObject__c",
                 "referenceId": "PrivateTestObject__cRef2"
             }
         },
         {
             "attributes": {
-                "type": "ltngsharing__PrivateTestObject__c",
+                "type": "PrivateTestObject__c",
                 "referenceId": "PrivateTestObject__cRef3"
             }
         },
         {
             "attributes": {
-                "type": "ltngsharing__PrivateTestObject__c",
+                "type": "PrivateTestObject__c",
                 "referenceId": "PrivateTestObject__cRef4"
             }
         }

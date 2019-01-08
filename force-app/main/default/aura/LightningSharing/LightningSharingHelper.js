@@ -1,7 +1,7 @@
 ({
 
 	nav : function (component, recordId) {
-
+		console.log('navigating to: ' + recordId);
 		component.find("navService").navigate({
 			type: 'standard__recordPage',
 			attributes: {

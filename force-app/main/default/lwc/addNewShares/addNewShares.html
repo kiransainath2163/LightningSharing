@@ -1,0 +1,12 @@
+<template>
+  <lightning-layout>
+    <lightning-layout-item padding="around-small" flexibility="grow">
+      <lightning-combobox label={label.Search} name="mdtype" onchange={typeChange} options={types}></lightning-combobox>
+    </lightning-layout-item>
+    <lightning-layout-item padding="around-small" flexibility="grow">
+      <lightning-input type="search" label="For" name="search" onchange={search}></lightning-input>
+    </lightning-layout-item>
+  </lightning-layout>
+
+  <lightning-datatable data={searchResults} columns={columns} key-field="Id" hide-checkbox-column="true" onrowaction={handleRowAction}></lightning-datatable>
+</template>

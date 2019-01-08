@@ -114,8 +114,8 @@
         <categories>Actions,Buttons,quicklinks</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Search</shortDescription>
-        <value>Search</value>
+        <shortDescription>Search in</shortDescription>
+        <value>Search in</value>
     </labels>
     <labels>
         <fullName>SearchFor</fullName>

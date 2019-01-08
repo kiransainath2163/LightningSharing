@@ -1,0 +1,21 @@
+{
+  "name": "lightningsharing",
+  "version": "1.0.0",
+  "description": "Lightning Components  Apex to implement adhoc sharing in Lightning Experience",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mshanemc/LightningSharing.git"
+  },
+  "author": "Shane McLaughlin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mshanemc/LightningSharing/issues"
+  },
+  "homepage": "https://github.com/mshanemc/LightningSharing#readme"
+}

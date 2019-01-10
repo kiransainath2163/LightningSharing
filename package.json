@@ -4,9 +4,14 @@
   "description": "Lightning Components  Apex to implement adhoc sharing in Lightning Experience",
   "main": "index.js",
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "@salesforce/lwc-jest": "^0.4.4"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "sfdx shane:org:delete; ./orgInit.sh",
+    "release": "./release.sh",
+    "test:unit": "lwc-jest",
+    "test:unit:watch": "lwc-jest --watch"
   },
   "repository": {
     "type": "git",

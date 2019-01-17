@@ -88,7 +88,13 @@ global without sharing class LightningSharing {
 			}
 
 			existing[0].put(getAccessLevelField(sobj), level);
-			update existing;
+
+			try {
+					update existing;
+			} catch (exception e){
+				throw new AuraHandledException(e.getMessage());
+			}
+
 			return JSON.serialize(existing);
 			} else {
 				System.debug('not already existing. will create');
@@ -113,8 +119,11 @@ global without sharing class LightningSharing {
 					share.put('CaseAccessLevel', level);
 					share.put('OpportunityAccessLevel', level);
 				}
-
-				insert share;
+				try {
+					insert share;
+				} catch (exception e){
+					throw new AuraHandledException(e.getMessage());
+				}
 				return JSON.serialize(share);
 			}
 		return null;

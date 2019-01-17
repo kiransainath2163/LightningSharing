@@ -1,8 +1,10 @@
 import { LightningElement, api, track, wire } from 'lwc';
+
 import Search from '@salesforce/label/c.Search';
 import PublicGroups from '@salesforce/label/c.PublicGroups';
 import Roles from '@salesforce/label/c.Roles';
 import Users from '@salesforce/label/c.Users';
+import For from '@salesforce/label/c.For';
 import TooManyResultsMessage from '@salesforce/label/c.TooManyResultsMessage';
 import Type3 from '@salesforce/label/c.TooManyResultsMessage';
 
@@ -10,6 +12,7 @@ import getSharings from '@salesforce/apex/LightningSharing.getSharings';
 import doSOSL from '@salesforce/apex/LightningSharing.doSOSL';
 
 import { refreshApex } from '@salesforce/apex';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 import {
   buttonStyling,
@@ -23,7 +26,8 @@ export default class AddNewShares extends LightningElement {
   @track label = {
     Search,
     TooManyResultsMessage,
-    Type3
+    Type3,
+    For
   };
   @track searchString = '';
 
@@ -44,7 +48,8 @@ export default class AddNewShares extends LightningElement {
     { value: 'userrole', label: Roles },
     { value: 'user', label: Users }
   ];
-  _selectedType;
+
+  selectedType = 'user';
 
   columns = [{ label: 'Name', fieldName: 'Name' }].concat(sharingButtonColumns);
 
@@ -66,8 +71,8 @@ export default class AddNewShares extends LightningElement {
   }
 
   typeChange(event) {
-    this._selectedType = event.detail.value;
-    console.log(`type is now ${this._selectedType}`);
+    this.selectedType = event.detail.value;
+    console.log(`type is now ${this.selectedType}`);
 
     // clear the results
     this.searchResults = [];
@@ -82,7 +87,7 @@ export default class AddNewShares extends LightningElement {
     const results = JSON.parse(
       await doSOSL({
         searchString: this.searchString,
-        objectType: this._selectedType
+        objectType: this.selectedType
       })
     );
 
@@ -91,9 +96,11 @@ export default class AddNewShares extends LightningElement {
 
     results.forEach(result => {
       // make some types a bit nicer
-      if (this._selectedType === 'user') {
-        result.Name = `${result.Name} (${this.translateTypes( result.UserType )})`;
-      } else if (this._selectedType === 'group') {
+      if (this.selectedType === 'user') {
+        result.Name = `${result.Name} (${this.translateTypes(
+          result.UserType
+        )})`;
+      } else if (this.selectedType === 'group') {
         result.Name = `${result.Name} (${this.translateTypes(result.Type)})`;
       }
       finalResults.push(result);
@@ -118,7 +125,6 @@ export default class AddNewShares extends LightningElement {
   }
 
   listenForEnter(event) {
-    console.log(event.code);
     if (event.code === 'Enter') {
       this.actuallySearch();
     }
@@ -144,18 +150,28 @@ export default class AddNewShares extends LightningElement {
 
     switch (event.detail.action.name) {
       case 'read':
-        await shareUpdate(event.detail.row.Id, this.recordId, 'Read');
-        this.refresh();
-        // await this.updateShares(event.detail.row, 'Read');
+        try {
+          await shareUpdate(event.detail.row.Id, this.recordId, 'Read');
+          this.refresh();
+        } catch (e) {
+          this.toastTheError(e, 'shareUpdate-read');
+        }
         break;
       case 'read_write':
-        await shareUpdate(event.detail.row.Id, this.recordId, 'Edit');
-        this.refresh();
-        // await this.updateShares(event.detail.row, 'Edit');
+        try {
+          await shareUpdate(event.detail.row.Id, this.recordId, 'Edit');
+          this.refresh();
+        } catch (e) {
+          this.toastTheError(e, 'shareUpdate-edit');
+        }
         break;
       case 'none':
-        await shareDelete(event.detail.row.Id, this.recordId);
-        this.refresh();
+        try {
+          await shareDelete(event.detail.row.Id, this.recordId);
+          this.refresh();
+        } catch (e) {
+          this.toastTheError(e, 'shareUpdate-edit');
+        }
     }
   }
 
@@ -173,5 +189,15 @@ export default class AddNewShares extends LightningElement {
     } else {
       return userType;
     }
+  }
+
+  toastTheError(e, source) {
+    console.error(source, e);
+    this.dispatchEvent(
+      new ShowToastEvent({
+        message: e.body.message,
+        variant: 'error'
+      })
+    );
   }
 }

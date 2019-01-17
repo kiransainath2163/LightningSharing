@@ -65,33 +65,25 @@ const buttonStylingSingle = existing => {
 
 const buttonStyling = (id, existingShares) => {
   // it could be a group or a role on a group
-  const existing = existingShares.find(share => share.UserOrGroupID === id || share.RoleId === id);
+  const existing = existingShares.find(
+    share => share.UserOrGroupID === id || share.RoleId === id
+  );
   return buttonStylingSingle(existing);
 };
 
 const shareDelete = async (UserOrGroupID, recordId) => {
-  try {
-    const apexResults = await deletePerm({
+    return await deletePerm({
       UserOrGroupID,
       recordId
     });
-    return apexResults;
-  } catch (e) {
-    console.error(e);
-  }
 };
 
 const shareUpdate = async (UserOrGroupID, recordId, level) => {
-  try {
-    const apexResults = await upsertPerm({
+  return await upsertPerm({
       UserOrGroupID,
       recordId,
       level
     });
-    return apexResults;
-  } catch (e) {
-    console.error(e);
-  }
 };
 
 export {

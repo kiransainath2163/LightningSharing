@@ -1,13 +1,13 @@
 <template>
   <lightning-layout vertical-align="end">
-    <lightning-layout-item padding="around-small" flexibility="grow">
-      <lightning-combobox label={label.Search} name="mdtype" onchange={typeChange} options={types}></lightning-combobox>
+    <lightning-layout-item padding="horizontal-small" flexibility="grow">
+      <lightning-combobox label={label.Search} name="mdtype" onchange={typeChange} options={types} value={selectedType}></lightning-combobox>
     </lightning-layout-item>
-    <lightning-layout-item padding="around-small" flexibility="grow">
-      <lightning-input type="search" label="For" name="search" onchange={searchEventHandler} onkeyup={listenForEnter} disabled={searchDisabled} placeholder={Type3}></lightning-input>
+    <lightning-layout-item padding="horizontal-small" flexibility="grow">
+      <lightning-input type="search" label={label.For} name="search" onchange={searchEventHandler} onkeyup={listenForEnter} disabled={searchDisabled} placeholder={Type3}></lightning-input>
     </lightning-layout-item>
 
-    <lightning-layout-item padding="around-small" flexibility="none">
+    <lightning-layout-item padding="horizontal-small" flexibility="none">
       <lightning-button type="submit" label="Search" variant="brand" onclick={actuallySearch}  disabled={searchDisabled}> </lightning-button>
     </lightning-layout-item>
   </lightning-layout>

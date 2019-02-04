@@ -72,18 +72,18 @@ const buttonStyling = (id, existingShares) => {
 };
 
 const shareDelete = async (UserOrGroupID, recordId) => {
-    return await deletePerm({
-      UserOrGroupID,
-      recordId
-    });
+  await deletePerm({
+    UserOrGroupID,
+    recordId
+  });
 };
 
 const shareUpdate = async (UserOrGroupID, recordId, level) => {
-  return await upsertPerm({
-      UserOrGroupID,
-      recordId,
-      level
-    });
+  await upsertPerm({
+    UserOrGroupID,
+    recordId,
+    level
+  });
 };
 
 export {

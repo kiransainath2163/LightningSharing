@@ -11,13 +11,16 @@ import {
   shareDelete
 } from 'c/sharingButtonSupport';
 
+import { logger, logError }  from 'c/lwcLogger';
+
 export default class ExistingShares extends NavigationMixin(LightningElement) {
   @api recordId;
   @track tableData = [];
+  source = 'ExistingShares';
 
   // call this when you know the sharing table is out of sync
   @api refresh() {
-    console.log('ExistingShares: refreshing');
+    logger(this.log, this.source, 'refreshing');
     refreshApex(this._refreshable);
   }
 
@@ -48,10 +51,11 @@ export default class ExistingShares extends NavigationMixin(LightningElement) {
   wiredSharings(result) {
     this._refreshable = result;
     if (result.error) {
-      console.log(result.error);
+      logError(this.log, this.source, 'wiredSharings', result.error);
     } else if (result.data) {
       const sharings = JSON.parse(result.data);
-      console.log('ExistingShares: sharing updated', sharings);
+      logger(this.log, this.source, 'sharing updated', sharings);
+
       const newArray = [];
       sharings.forEach(sharing => {
         newArray.push({
@@ -64,10 +68,8 @@ export default class ExistingShares extends NavigationMixin(LightningElement) {
   }
 
   async handleRowAction(event) {
-    console.log('heard action called');
-    console.log(event);
-    console.log(JSON.parse(JSON.stringify(event.detail)));
-
+    logger(this.log, this.source, 'RowAction called', event.detail);
+    
     switch (event.detail.action.name) {
       case 'view':
         this.viewRecordRouter(event.detail.row);
@@ -95,6 +97,9 @@ export default class ExistingShares extends NavigationMixin(LightningElement) {
         );
         this.refresh();
         break;
+      default: 
+        this.logError(this.log, this.source, 'handleRowAction switch statement no match found');
+    
     }
 
     // options for the actions
@@ -110,11 +115,10 @@ export default class ExistingShares extends NavigationMixin(LightningElement) {
         }
       });
     } else if (row.UserOrGroupType === 'Group') {
-      //https://force-ruby-1598-dev-ed.lightning.force.com/lightning/setup/PublicGroups/page?address=%2Fsetup%2Fown%2Fgroupdetail.jsp%3Fid%3D00G9A0000011x6u
       const url = `/lightning/setup/PublicGroups/page?address=%2Fsetup%2Fown%2Fgroupdetail.jsp%3Fid%3D${
         row.UserOrGroupID
       }`;
-      console.error(`group: ${url}`);
+      logError(this.log, this.source, `regular group: ${url}`);
       this[NavigationMixin.Navigate]({
         type: 'standard__webPage',
         attributes: {
@@ -122,9 +126,8 @@ export default class ExistingShares extends NavigationMixin(LightningElement) {
         }
       });
     } else if (row.RoleId) {
-      // https://force-ruby-1598-dev-ed.lightning.force.com/lightning/setup/Roles/page?address=%2F00E9A000000Ds2M%3Fsetupid%3DRoles
       const url = `/lightning/setup/Roles/page?address=%2F${row.RoleId}%3Fsetupid%3DRoles`;
-      console.error(`group: ${url}`);
+      logError(this.log, this.source, `RoleId, group: ${url}`);
       this[NavigationMixin.Navigate]({
         type: 'standard__webPage',
         attributes: {

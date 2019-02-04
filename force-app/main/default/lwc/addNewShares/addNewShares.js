@@ -11,6 +11,8 @@ import Type3 from '@salesforce/label/c.TooManyResultsMessage';
 import getSharings from '@salesforce/apex/LightningSharing.getSharings';
 import doSOSL from '@salesforce/apex/LightningSharing.doSOSL';
 
+import { logger, logError }  from 'c/lwcLogger';
+
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
@@ -22,6 +24,7 @@ import {
 } from 'c/sharingButtonSupport';
 
 export default class AddNewShares extends LightningElement {
+  @api log = false;
   @api recordId;
   @track label = {
     Search,
@@ -30,6 +33,7 @@ export default class AddNewShares extends LightningElement {
     For
   };
   @track searchString = '';
+  source = 'addNewShares';
 
   get tooManyResults() {
     return this.searchResults.length > 199;
@@ -37,7 +41,7 @@ export default class AddNewShares extends LightningElement {
 
   // call this when you know the sharing table is out of sync
   @api refresh() {
-    console.log('addNewShares: refreshing');
+    logger(this.log, this.source, 'refreshing');
     refreshApex(this._refreshable);
   }
 
@@ -62,9 +66,9 @@ export default class AddNewShares extends LightningElement {
   wiredSharings(result) {
     this._refreshable = result;
     if (result.error) {
-      console.log(result.error);
+      logError(this.log, this.source, 'getSharings error', result.error);
     } else if (result.data) {
-      console.log(JSON.parse(result.data));
+      logger(this.log, this.source, 'getSharings returned', result.data);
       this.existingShares = JSON.parse(result.data);
       this.updateSharingLevelButtons();
     }
@@ -72,15 +76,14 @@ export default class AddNewShares extends LightningElement {
 
   typeChange(event) {
     this.selectedType = event.detail.value;
-    console.log(`type is now ${this.selectedType}`);
-
+    logger(this.log, this.source, `type is now ${this.selectedType}`);
     // clear the results
     this.searchResults = [];
     // TODO: how clear the search box
   }
 
   async actuallySearch() {
-    console.log('actually searching!');
+    logger(this.log, this.source, 'actually searching!');
     this.searchResults = [];
     this.searchDisabled = true;
 
@@ -90,8 +93,7 @@ export default class AddNewShares extends LightningElement {
         objectType: this.selectedType
       })
     );
-
-    console.log(results);
+    logger(this.log, this.source, 'search results', results);
     const finalResults = [];
 
     results.forEach(result => {
@@ -144,9 +146,7 @@ export default class AddNewShares extends LightningElement {
   }
 
   async handleRowAction(event) {
-    console.log('heard action called');
-    console.log(event);
-    console.log(JSON.parse(JSON.stringify(event.detail)));
+    logger(this.log, this.source, 'row action called from datatable', event.detail);
 
     switch (event.detail.action.name) {
       case 'read':
@@ -172,6 +172,9 @@ export default class AddNewShares extends LightningElement {
         } catch (e) {
           this.toastTheError(e, 'shareUpdate-edit');
         }
+        break;
+      default: 
+        this.logError(this.log, this.source, 'handleRowAction switch statement no match found');
     }
   }
 
@@ -186,13 +189,13 @@ export default class AddNewShares extends LightningElement {
       return 'Chatter';
     } else if (userType === 'CSPLitePortal') {
       return 'High Volume Customer';
-    } else {
-      return userType;
-    }
+    } 
+    return userType;
+    
   }
 
-  toastTheError(e, source) {
-    console.error(source, e);
+  toastTheError(e, errorSource) {
+    logError(this.log, this.source, errorSource, e);
     this.dispatchEvent(
       new ShowToastEvent({
         message: e.body.message,

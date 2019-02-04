@@ -6,8 +6,12 @@ import BackButton from '@salesforce/label/c.Back';
 import ViewCurrentPermissions from '@salesforce/label/c.ViewCurrentPermissions';
 import AddNewPermission from '@salesforce/label/c.AddNewPermission';
 
+import { logger, logError }  from 'c/lwcLogger';
+
 export default class LightningSharingWrapper extends NavigationMixin( LightningElement ) {
   @api recordId;
+  @api log = false;
+  source = 'LightningSharingWrapper';
 
   @track cardTitle = '';
   label = {
@@ -24,9 +28,9 @@ export default class LightningSharingWrapper extends NavigationMixin( LightningE
   })
   wiredRecord({ error, data }) {
     if (error) {
-      console.log(error);
+      logError(this.log, this.source, 'getRecordUI', error);
     } else {
-      console.log(data);
+      logger(this.log, this.source, 'getRecordUI', data);
       if (!data) return;
 
       const apiName = data.records[this.recordId].apiName;

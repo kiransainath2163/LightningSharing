@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "baseUrl": ".",
+        "paths": {
+            "c/add-new-shares": [
+                "addNewShares/addNewShares.js"
+            ],
+            "c/existing-shares": [
+                "existingShares/existingShares.js"
+            ],
+            "c/lightning-sharing-wrapper": [
+                "lightningSharingWrapper/lightningSharingWrapper.js"
+            ],
+            "c/sharing-button-support": [
+                "sharingButtonSupport/sharingButtonSupport.js"
+            ],
+            "c/lwc-logger": [
+                "lwcLogger/lwcLogger.js"
+            ]
+        }
+    },
+    "include": [
+        "**/*",
+        "../../../../.sfdx/typings/lwc/**/*.d.ts"
+    ]
+}

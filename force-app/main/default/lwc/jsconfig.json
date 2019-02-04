@@ -12,11 +12,11 @@
             "c/lightning-sharing-wrapper": [
                 "lightningSharingWrapper/lightningSharingWrapper.js"
             ],
-            "c/sharing-button-support": [
-                "sharingButtonSupport/sharingButtonSupport.js"
-            ],
             "c/lwc-logger": [
                 "lwcLogger/lwcLogger.js"
+            ],
+            "c/sharing-button-support": [
+                "sharingButtonSupport/sharingButtonSupport.js"
             ]
         }
     },

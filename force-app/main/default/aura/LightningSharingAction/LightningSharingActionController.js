@@ -7,7 +7,7 @@
 				componentName: 'c__LightningSharing'
 			},
 			state: {
-				"c__recordId": component.get('v.recordId')
+				'c__recordId': component.get('v.recordId')
 			}
 		});
 	}

@@ -52,7 +52,7 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>ReadOnlyTestObject__c.Sharing</actionName>
+            <actionName>ltngsharing__ReadOnlyTestObject__c.Sharing</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
         </platformActionListItems>

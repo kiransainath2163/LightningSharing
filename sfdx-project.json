@@ -4,8 +4,8 @@
       "path": "force-app",
       "versionName": "Lightning Sharing",
       "versionDescription": "share records manually in Lightning",
-      "versionNumber": "2.0.0.NEXT",
-      "package": "Lightning Sharing"
+      "versionNumber": "4.0.0.NEXT",
+      "package": "lightningSharing"
     },
     {
       "path": "implementation",
@@ -16,6 +16,6 @@
   "sfdcLoginUrl": "https://login.salesforce.com",
   "sourceApiVersion": "45.0",
   "packageAliases": {
-    "Lightning Sharing" : "0Ho6A000000CaTSSA0"
+    "lightningSharing": "0Ho6A000000CaTSSA0"
   }
 }

@@ -188,7 +188,7 @@ global without sharing class LightningSharing {
 		}
 	}
 
-private static String objectTypeFromId(Id recordId){
+global static String objectTypeFromId(Id recordId){
 	Schema.SObjectType token = recordId.getSObjectType();
 	Schema.DescribeSObjectResult dr = token.getDescribe();
 	return dr.getName();
@@ -347,7 +347,7 @@ global static String getSharings(Id recordId){
 		//custom objects
 		if (sobj.contains('__c')){
 			Map<String, Schema.SObjectType> tokens = Schema.getGlobalDescribe();
-			if (  tokens.containsKey( getSharingTableName(sobj) ) || tokens.containsKey('' + getSharingTableName(sobj)) ) {
+			if (  tokens.containsKey( getSharingTableName(sobj).toLowerCase() ) || tokens.containsKey('ltngsharing__' + getSharingTableName(sobj).toLowerCase()) ) {
 				return true;
 			}
 		} else {

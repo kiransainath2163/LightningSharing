@@ -2,26 +2,26 @@
     "records": [
         {
             "attributes": {
-                "type": "PrivateTestObject__c",
-                "referenceId": "PrivateTestObject__cRef1"
+                "type": "ltngsharing__PrivateTestObject__c",
+                "referenceId": "ltngsharing__PrivateTestObject__cRef1"
             }
         },
         {
             "attributes": {
-                "type": "PrivateTestObject__c",
-                "referenceId": "PrivateTestObject__cRef2"
+                "type": "ltngsharing__PrivateTestObject__c",
+                "referenceId": "ltngsharing__PrivateTestObject__cRef2"
             }
         },
         {
             "attributes": {
-                "type": "PrivateTestObject__c",
-                "referenceId": "PrivateTestObject__cRef3"
+                "type": "ltngsharing__PrivateTestObject__c",
+                "referenceId": "ltngsharing__PrivateTestObject__cRef3"
             }
         },
         {
             "attributes": {
-                "type": "PrivateTestObject__c",
-                "referenceId": "PrivateTestObject__cRef4"
+                "type": "ltngsharing__PrivateTestObject__c",
+                "referenceId": "ltngsharing__PrivateTestObject__cRef4"
             }
         }
     ]

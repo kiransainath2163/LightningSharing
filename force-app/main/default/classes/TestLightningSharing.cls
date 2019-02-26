@@ -171,12 +171,14 @@ private class TestLightningSharing {
   static testMethod void testStringStuff(){
   	LightningSharing.getLookupField('Account');
   	LightningSharing.getAccessLevelField('Account');
-  	LightningSharing.getSharingTableName('Account');
+  	system.assertEquals('AccountShare', LightningSharing.getSharingTableName('Account'));
 
   	LightningSharing.getLookupField('Custom__c');
   	LightningSharing.getAccessLevelField('Custom__c');
   	LightningSharing.getSharingTableName('Custom__c');
+		system.assertEquals('Custom__Share', LightningSharing.getSharingTableName('Custom__c'));
 
+		system.assertEquals('Namespace__Custom__Share', LightningSharing.getSharingTableName('Namespace__Custom__c'));
   }
 
 
@@ -248,10 +250,16 @@ private class TestLightningSharing {
 		LightningSharing.sharingExists('Account');
 
 
-		System.assertEquals(true, LightningSharing.sharingExists('PrivateTestObject__c'));
-		System.assertEquals(true, LightningSharing.sharingExists('ReadOnlyTestObject__c'));
+		System.assertEquals(true, LightningSharing.sharingExists('ltngsharing__PrivateTestObject__c'));
+		System.assertEquals(true, LightningSharing.sharingExists('ltngsharing__ReadOnlyTestObject__c'));
 
+		// Map<String, Schema.SObjectType> tokens = Schema.getGlobalDescribe();
+		// for (string s:tokens.keySet()){
+		// 	system.debug(s);
+		// }
 	}
+
+	
 
   @testSetup static void makeData(){
     	//make some object for testing, like a lead

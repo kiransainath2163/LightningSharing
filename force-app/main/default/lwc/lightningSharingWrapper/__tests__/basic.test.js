@@ -12,7 +12,7 @@ describe('loads outer component with data', () => {
 
   it('loads and has action buttons', () => {
     // const getRecordUIWireAdapter = registerLdsTestWireAdapter(getRecordUi);
-    const element = createElement('c-lightning-sharing-wrapper', {
+    const element = createElement('ltngsharing-lightning-sharing-wrapper', {
       is: lightningSharingWrapper
     });
     document.body.appendChild(element);

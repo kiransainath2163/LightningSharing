@@ -7,6 +7,6 @@
 	<aura:attribute name="recordId" type="String" />
 
 	<!-- temporary place for an LWC until they are supported with isUrlAddressable -->
-	<c:lightningSharingWrapper recordId="{!v.recordId}"/>
+	<ltngsharing:lightningSharingWrapper recordId="{!v.recordId}"/>
 
 </aura:component>

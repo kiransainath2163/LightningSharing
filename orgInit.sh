@@ -6,5 +6,10 @@ sfdx force:user:permset:assign -n TestingPerms
 sfdx force:data:tree:import -f data/PrivateTestObject__c.json
 sfdx force:data:tree:import -f data/ReadOnlyTestObject__c.json
 
+# for mobile
 sfdx force:user:password:generate
+
+# for security testing
+sfdx force:user:create generatepassword=true FirstName=Test LastName=Privilege permsets=TestingPerms profileName="Standard User"
+
 sfdx force:org:open

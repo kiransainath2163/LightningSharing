@@ -1,0 +1,26 @@
+{
+  "name": "lightningsharing",
+  "version": "1.0.0",
+  "description": "Lightning Components  Apex to implement adhoc sharing in Lightning Experience",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "@salesforce/lwc-jest": "^0.4.10"
+  },
+  "scripts": {
+    "build": "sfdx shane:org:delete; ./orgInit.sh",
+    "release": "./release.sh",
+    "test:unit": "lwc-jest",
+    "test:unit:watch": "lwc-jest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mshanemc/LightningSharing.git"
+  },
+  "author": "Shane McLaughlin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mshanemc/LightningSharing/issues"
+  },
+  "homepage": "https://github.com/mshanemc/LightningSharing#readme"
+}

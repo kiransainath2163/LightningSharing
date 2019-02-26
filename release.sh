@@ -23,6 +23,6 @@ sfdx force:data:tree:import -f data/PrivateTestObject__c.json -u shareTestOrg
 sfdx force:data:tree:import -f data/ReadOnlyTestObject__c.json -u shareTestOrg
 
 sfdx force:user:password:generate -u shareTestOrg
-sfdx force:user:create generatepassword=true FirstName=Test LastName=Privilege permsets=TestingPerms profileName="Standard User"
+sfdx force:user:create generatepassword=true FirstName=Test LastName=Privilege permsets=TestingPerms profileName="Standard User" -u shareTestOrg
 
 rm -rf testSrc

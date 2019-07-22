@@ -3,19 +3,19 @@
         {
             "attributes": {
                 "type": "ltngsharing__ReadOnlyTestObject__c",
-                "referenceId": "ReadOnlyTestObject__cRef1"
+                "referenceId": "ltngsharing__ReadOnlyTestObject__cRef1"
             }
         },
         {
             "attributes": {
                 "type": "ltngsharing__ReadOnlyTestObject__c",
-                "referenceId": "ReadOnlyTestObject__cRef2"
+                "referenceId": "ltngsharing__ReadOnlyTestObject__cRef2"
             }
         },
         {
             "attributes": {
                 "type": "ltngsharing__ReadOnlyTestObject__c",
-                "referenceId": "ReadOnlyTestObject__cRef3"
+                "referenceId": "ltngsharing__ReadOnlyTestObject__cRef3"
             }
         }
     ]

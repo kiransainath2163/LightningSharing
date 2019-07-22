@@ -3,25 +3,25 @@
         {
             "attributes": {
                 "type": "ltngsharing__PrivateTestObject__c",
-                "referenceId": "PrivateTestObject__cRef1"
+                "referenceId": "ltngsharing__PrivateTestObject__cRef1"
             }
         },
         {
             "attributes": {
                 "type": "ltngsharing__PrivateTestObject__c",
-                "referenceId": "PrivateTestObject__cRef2"
+                "referenceId": "ltngsharing__PrivateTestObject__cRef2"
             }
         },
         {
             "attributes": {
                 "type": "ltngsharing__PrivateTestObject__c",
-                "referenceId": "PrivateTestObject__cRef3"
+                "referenceId": "ltngsharing__PrivateTestObject__cRef3"
             }
         },
         {
             "attributes": {
                 "type": "ltngsharing__PrivateTestObject__c",
-                "referenceId": "PrivateTestObject__cRef4"
+                "referenceId": "ltngsharing__PrivateTestObject__cRef4"
             }
         }
     ]

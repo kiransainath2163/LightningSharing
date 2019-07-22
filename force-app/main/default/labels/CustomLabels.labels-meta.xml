@@ -114,8 +114,8 @@
         <categories>Actions,Buttons,quicklinks</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Search</shortDescription>
-        <value>Search</value>
+        <shortDescription>Search in</shortDescription>
+        <value>Search in</value>
     </labels>
     <labels>
         <fullName>SearchFor</fullName>
@@ -140,6 +140,14 @@
         <protected>false</protected>
         <shortDescription>Back</shortDescription>
         <value>Back</value>
+    </labels>
+    <labels>
+        <fullName>For</fullName>
+        <categories>Buttons</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>For</shortDescription>
+        <value>For</value>
     </labels>
     <labels>
         <fullName>UserOrGroup</fullName>

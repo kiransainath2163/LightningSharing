@@ -3,31 +3,6 @@ global without sharing class LightningSharing {
 	global class SharingPermsException extends Exception{}
 
 	@AuraEnabled
-	public static String sayMyName(Id recordId){
-		String nameField;
-
-		Schema.SObjectType token = recordId.getSObjectType();
-		for (Schema.SObjectField dfr:token.getDescribe().fields.getMap().values()){
-			if (dfr.getDescribe().isNameField()){
-				nameField = dfr.getDescribe().getName();
-			}
-		}
-		String query = 'select ' + nameField + ' from ' + recordId.getSObjectType() + ' where id = \'' + recordId + '\'';
-		System.debug(query);
-		recordStuff rs = new recordStuff();
-		rs.recordName = String.valueOf(Database.query(query)[0].get(nameField));
-		rs.objectType = String.valueOf(recordId.getSObjectType().getDescribe().getLabel());
-
-		return JSON.serialize(rs);
-
-	}
-
-	class recordStuff {
-		String recordName {get;set;}
-		String objectType {get;set;}
-	}
-
-	@AuraEnabled
 	global static boolean canIEditPerms(Id recordId){
 		try {
 			String query = 'SELECT RecordId, HasDeleteAccess, HasAllAccess FROM UserRecordAccess WHERE RecordId = \'' + String.escapeSingleQuotes(String.valueOf(recordId)) + '\' AND UserId = \'' + UserInfo.getUserId() + '\'';
@@ -51,6 +26,16 @@ global without sharing class LightningSharing {
 		//can I delete the sharing objects?
 		if (!describe.isDeletable() || !describe.isAccessible()){
 			throw new AuraHandledException(Label.LackingPermissions);
+		}
+
+		// special handling for role => groups
+		if (UserOrGroupID.getSobjectType()==Schema.UserRole.SObjectType){
+			//it's a role...find the matching group?
+			list<group> matchingGroups = [select id, name, type from group where RelatedId =: UserOrGroupID and type = 'Role'];
+			if (matchingGroups.size()>1){
+				throw new AuraHandledException(Label.MultipleGroupsForRole);
+			}
+			UserOrGroupID = matchingGroups[0].Id;
 		}
 
 		String query = buildQuery(recordId);
@@ -103,7 +88,13 @@ global without sharing class LightningSharing {
 			}
 
 			existing[0].put(getAccessLevelField(sobj), level);
-			update existing;
+
+			try {
+					update existing;
+			} catch (exception e){
+				throw new AuraHandledException(e.getMessage());
+			}
+
 			return JSON.serialize(existing);
 			} else {
 				System.debug('not already existing. will create');
@@ -128,8 +119,11 @@ global without sharing class LightningSharing {
 					share.put('CaseAccessLevel', level);
 					share.put('OpportunityAccessLevel', level);
 				}
-
-				insert share;
+				try {
+					insert share;
+				} catch (exception e){
+					throw new AuraHandledException(e.getMessage());
+				}
 				return JSON.serialize(share);
 			}
 		return null;
@@ -194,16 +188,13 @@ global without sharing class LightningSharing {
 		}
 	}
 
-
-
-@AuraEnabled
 global static String objectTypeFromId(Id recordId){
 	Schema.SObjectType token = recordId.getSObjectType();
 	Schema.DescribeSObjectResult dr = token.getDescribe();
 	return dr.getName();
 }
 
-@AuraEnabled
+@AuraEnabled(cacheable=true)
 global static String getSharings(Id recordId){
 
 	if (!sharingExists(objectTypeFromId(recordId))){
@@ -256,6 +247,7 @@ global static String getSharings(Id recordId){
 				//special handling for roles
 				if (sh.SubType.contains('Role')){
 					sh.UserOrGroupName = RoleMap.get(GroupMap.get(sh.UserOrGroupID).RelatedId).Name;
+					sh.RoleId = GroupMap.get(sh.UserOrGroupID).RelatedId;
 				}
 			}
 		}
@@ -299,6 +291,7 @@ global static String getSharings(Id recordId){
 		global String UserOrGroupID {get;set;}
 		global String AccessLevel {get;set;}
 		global String RowCause {get;set;}
+		global String RoleId {get;set;}
 	}
 
 	private static boolean isStandard (String sobj){
@@ -354,7 +347,7 @@ global static String getSharings(Id recordId){
 		//custom objects
 		if (sobj.contains('__c')){
 			Map<String, Schema.SObjectType> tokens = Schema.getGlobalDescribe();
-			if (  tokens.containsKey( getSharingTableName(sobj) ) || tokens.containsKey('ltngsharing__' + getSharingTableName(sobj)) ) {
+			if (  tokens.containsKey( getSharingTableName(sobj).toLowerCase() ) || tokens.containsKey('ltngsharing__' + getSharingTableName(sobj).toLowerCase()) ) {
 				return true;
 			}
 		} else {

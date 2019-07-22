@@ -1,3 +1,4 @@
 **TestStuff
 .vscode/settings.json
-node_modules
+**/node_modules
+yarn-error.log

@@ -17,6 +17,12 @@
             ],
             "c/sharingButtonSupport": [
                 "sharingButtonSupport/sharingButtonSupport.js"
+            ],
+            "c/lightningSharingBuilderWrapper": [
+                "lightningSharingBuilderWrapper/lightningSharingBuilderWrapper.js"
+            ],
+            "c/lightningSharingTabs": [
+                "lightningSharingTabs/lightningSharingTabs.js"
             ]
         }
     },

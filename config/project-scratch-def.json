@@ -1,7 +1,7 @@
 {
     "edition": "Developer",
     "hasSampleData": true,
-    "features": ["Communities"],
+    "features": ["Communities", "Sites", "SiteDotCom"],
     "settings": {
         "orgPreferenceSettings": {
             "s1DesktopEnabled": true,

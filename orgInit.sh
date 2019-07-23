@@ -1,9 +1,12 @@
 sfdx force:org:create -a ltngshare -f config/project-scratch-def.json -s -d 1
 sfdx force:mdapi:deploy -d experienceBundlePilot -w 20
-sfdx shane:github:package:install -g mshanemc -r community-boilerplate
+sfdx shane:github:src:install -g mshanemc -r community-boilerplate -p force-app/main/default -c
 
-sfdx force:source:push
+sfdx force:source:push -f
 sfdx force:user:permset:assign -n TestingPerms
+
+sfdx force:apex:execute -f scripts/roleAssign.cls 
+sfdx force:apex:execute -f scripts/communityUserCreate.cls 
 
 # create some records
 sfdx force:data:tree:import -f data/PrivateTestObject__c.json

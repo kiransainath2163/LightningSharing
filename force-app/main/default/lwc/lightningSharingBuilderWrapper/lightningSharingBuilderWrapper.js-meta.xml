@@ -2,14 +2,16 @@
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata" fqn="lightningSharingWrapper">
     <apiVersion>46.0</apiVersion>
     <isExposed>true</isExposed>
+    <masterLabel>Lightning Sharing</masterLabel>
+    <description>Sharing component for App/Community Builder Record Pages</description>
     <targets>
         <target>lightning__RecordPage</target>
         <target>lightningCommunity__Page</target>
         <target>lightningCommunity__Default</target>
     </targets>
-    <!-- <targetConfigs>
-        <targetConfig targets="lightningCommunity__Default, lightning__RecordPage">
-            <property name="recordId" type="String"></property>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="recordId" type="String" description="should be set to {!recordId}"></property>
         </targetConfig>
-    </targetConfigs> -->
+    </targetConfigs>
 </LightningComponentBundle>

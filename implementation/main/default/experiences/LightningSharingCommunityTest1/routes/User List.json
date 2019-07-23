@@ -1,0 +1,9 @@
+{
+  "urlPrefix" : "profile",
+  "appPageId" : "7f4fdac9-a1a5-4015-bf07-51969a4b2b79",
+  "routeType" : "list-005",
+  "pageAccess" : "UseParent",
+  "label" : "User List",
+  "id" : "4240d6e1-2784-473e-a4ac-7a350bf5e9d6",
+  "type" : "route"
+}

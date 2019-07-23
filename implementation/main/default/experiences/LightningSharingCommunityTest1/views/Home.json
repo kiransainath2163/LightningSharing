@@ -1,0 +1,117 @@
+{
+  "themeLayoutType" : "Inner",
+  "viewType" : "home",
+  "appPageId" : "7f4fdac9-a1a5-4015-bf07-51969a4b2b79",
+  "componentName" : "siteforce:sldsTwoCol84Layout",
+  "label" : "Home",
+  "id" : "116935e1-161d-4306-b3b6-a8465e71a6fc",
+  "type" : "view",
+  "regions" : [ {
+    "regionName" : "header",
+    "id" : "102867d4-7de3-4a10-bc3f-3dd37d238fc9",
+    "type" : "region",
+    "components" : [ {
+      "componentName" : "forceCommunity:richTextInline",
+      "componentAttributes" : {
+        "richTextValue" : "<img class='sfdcCbImage' src='/sfsites/c/img/community/cpt/cpt-home-banner.png'             style='width:100%;'/>"
+      },
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "id" : "95b330b1-498c-4ddf-86b7-a7a7f8648146",
+      "type" : "component",
+      "renditions" : [ ]
+    }, {
+      "componentName" : "forceCommunity:tileMenu",
+      "componentAttributes" : {
+        "tileMenuEditor" : "0Lm540000004Eop",
+        "navigationLinkSetId" : "0Lm540000004Eop",
+        "showHoverIcon" : "true"
+      },
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "id" : "9018c054-078c-4c64-9155-373fe65db0ae",
+      "type" : "component",
+      "renditions" : [ ]
+    } ]
+  }, {
+    "regionName" : "content",
+    "id" : "0980a97f-56a9-4457-a218-674a8a24ca7e",
+    "type" : "region",
+    "components" : [ {
+      "componentName" : "forceCommunity:objectHome",
+      "componentAttributes" : {
+        "layout" : "STANDARD",
+        "showDisplay" : "showall",
+        "scope" : "Case",
+        "showPinnedList" : "true",
+        "showActionBar" : "true",
+        "filterName" : "MyOpenCases",
+        "pageSize" : "5",
+        "enableInlineEdit" : "true",
+        "showSearchBar" : "true"
+      },
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "id" : "699e7505-90f8-4a55-bb70-c791fd602681",
+      "type" : "component",
+      "renditions" : [ ]
+    } ]
+  }, {
+    "regionName" : "sidebar",
+    "id" : "f14be76a-734b-4a92-918f-d261cd16b201",
+    "type" : "region",
+    "components" : [ {
+      "componentName" : "forceCommunity:pausedInterviewCard",
+      "componentAttributes" : {
+        "showPauseTime" : "true",
+        "showOwnerName" : "false",
+        "deleteButtonText" : "Delete",
+        "showPauseStep" : "true",
+        "resumeButtonLabel" : "Resume",
+        "showNumberInTitle" : "true",
+        "resumeButtonAlign" : "right",
+        "pageSize" : "10",
+        "showPauseReason" : "true",
+        "title" : "Paused Flows",
+        "showDeleteButton" : "false"
+      },
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "id" : "2732ebba-baa0-4ea2-ba81-78244e290515",
+      "type" : "component",
+      "renditions" : [ ]
+    }, {
+      "componentName" : "forceCommunity:richTextInline",
+      "componentAttributes" : {
+        "richTextValue" : "             <p><b style=\"font-size: 16px;\">Quick Links</b></p>             <p><br></p>             <p><a href=\"http://www.salesforce.com/\" target=\"_blank\">Link 1</a></p>             <p><br></p>             <p><a href=\"http://www.salesforce.com/\" target=\"_blank\">Link 2</a></p>             <p><br></p>             <p><a href=\"http://www.salesforce.com/\" target=\"_blank\">Link 3</a></p>             <p><br></p>             <p><a href=\"http://www.salesforce.com/\" target=\"_blank\">Link 4</a></p>         "
+      },
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "id" : "de47f5da-c53a-4402-b88b-be41a318239a",
+      "type" : "component",
+      "renditions" : [ ]
+    } ]
+  }, {
+    "regionName" : "footer",
+    "id" : "53fb7f3d-e6eb-4f95-ba40-c0bdbacd6586",
+    "type" : "region",
+    "components" : [ ]
+  }, {
+    "regionName" : "sfdcHiddenRegion",
+    "id" : "f98ded09-0295-4a4c-ad0f-70937b6fe77b",
+    "type" : "region",
+    "components" : [ {
+      "componentName" : "forceCommunity:seoAssistant",
+      "componentAttributes" : {
+        "metaTags" : "",
+        "description" : "",
+        "title" : "Home"
+      },
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "id" : "abd6857e-dab1-4c1d-93e0-23f802c083ba",
+      "type" : "component",
+      "renditions" : [ ]
+    } ]
+  } ]
+}

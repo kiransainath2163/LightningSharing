@@ -1,0 +1,9 @@
+{
+  "urlPrefix" : "feed",
+  "appPageId" : "7f4fdac9-a1a5-4015-bf07-51969a4b2b79",
+  "routeType" : "feeditem-generic",
+  "pageAccess" : "UseParent",
+  "label" : "Feed Detail",
+  "id" : "a7cf75ae-1edc-4251-b9aa-d9f5825c0f2b",
+  "type" : "route"
+}

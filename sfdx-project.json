@@ -1,21 +1,21 @@
 {
-  "packageDirectories": [
-    {
-      "path": "force-app",
-      "versionName": "Lightning Sharing",
-      "versionDescription": "share records manually in Lightning",
-      "versionNumber": "4.0.0.NEXT",
-      "package": "lightningSharing"
-    },
-    {
-      "path": "implementation",
-      "default": true
+    "packageDirectories": [
+        {
+            "path": "force-app",
+            "versionName": "Lightning Sharing",
+            "versionDescription": "share records manually in Lightning",
+            "versionNumber": "4.0.0.NEXT",
+            "package": "lightningSharing"
+        },
+        {
+            "path": "implementation",
+            "default": true
+        }
+    ],
+    "namespace": "ltngsharing",
+    "sfdcLoginUrl": "https://login.salesforce.com",
+    "sourceApiVersion": "46.0",
+    "packageAliases": {
+        "lightningSharing": "0Ho6A000000CaTSSA0"
     }
-  ],
-  "namespace": "ltngsharing",
-  "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "45.0",
-  "packageAliases": {
-    "lightningSharing": "0Ho6A000000CaTSSA0"
-  }
 }

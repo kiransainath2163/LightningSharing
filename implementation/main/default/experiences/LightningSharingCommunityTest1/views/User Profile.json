@@ -1,0 +1,57 @@
+{
+  "themeLayoutType" : "Inner",
+  "viewType" : "detail-005",
+  "appPageId" : "7f4fdac9-a1a5-4015-bf07-51969a4b2b79",
+  "componentName" : "siteforce:sldsOneColLayout",
+  "label" : "User Profile",
+  "id" : "7e28d5ad-0fbd-4cda-8485-3a084d33d761",
+  "type" : "view",
+  "regions" : [ {
+    "regionName" : "header",
+    "id" : "e92c39da-0d0c-4c15-b7c8-58e0192b91d5",
+    "type" : "region",
+    "components" : [ {
+      "componentName" : "forceCommunity:userProfileWithBanner",
+      "componentAttributes" : {
+        "profileTabLabel" : "Profile",
+        "showBannerImage" : "true",
+        "richTextValue" : "<img alt='Banner image at the top of the page' class='sfdcCbImage' src='/sfsites/c/img/community/cpt/cpt-profile-banner.png'/>",
+        "showSettingsTab" : "true",
+        "settingsTabLabel" : "Settings & Preferences",
+        "id" : "{!recordId}"
+      },
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "id" : "3e317932-71b7-490f-8821-d86ff87342c3",
+      "type" : "component",
+      "renditions" : [ ]
+    } ]
+  }, {
+    "regionName" : "content",
+    "id" : "80edb362-5e1a-4d18-af23-9c93531977ea",
+    "type" : "region",
+    "components" : [ ]
+  }, {
+    "regionName" : "footer",
+    "id" : "ff6838e3-ba47-4d83-8954-993f836a5c28",
+    "type" : "region",
+    "components" : [ ]
+  }, {
+    "regionName" : "sfdcHiddenRegion",
+    "id" : "158ad789-4bbf-4587-8b18-8ee458f0de31",
+    "type" : "region",
+    "components" : [ {
+      "componentName" : "forceCommunity:seoAssistant",
+      "componentAttributes" : {
+        "metaTags" : "",
+        "description" : "",
+        "title" : ""
+      },
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "id" : "4e4e0ed9-c589-49ff-b68f-f3aeed54d055",
+      "type" : "component",
+      "renditions" : [ ]
+    } ]
+  } ]
+}

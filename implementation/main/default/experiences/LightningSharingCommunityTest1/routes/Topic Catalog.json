@@ -1,0 +1,9 @@
+{
+  "urlPrefix" : "topiccatalog",
+  "appPageId" : "7f4fdac9-a1a5-4015-bf07-51969a4b2b79",
+  "routeType" : "topic-catalog",
+  "pageAccess" : "UseParent",
+  "label" : "Topic Catalog",
+  "id" : "6772c9df-d3a0-4f0d-b2ae-1e9e638b3604",
+  "type" : "route"
+}

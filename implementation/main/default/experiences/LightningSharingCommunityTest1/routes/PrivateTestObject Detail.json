@@ -1,0 +1,10 @@
+{
+  "urlPrefix" : "privatetestobject",
+  "appPageId" : "7f4fdac9-a1a5-4015-bf07-51969a4b2b79",
+  "routeType" : "detail-a00",
+  "pageAccess" : "UseParent",
+  "objectApiName" : "ltngsharing__PrivateTestObject__c",
+  "label" : "PrivateTestObject Detail",
+  "id" : "8c92d360-2fba-4eac-94e9-66bdfd0724aa",
+  "type" : "route"
+}

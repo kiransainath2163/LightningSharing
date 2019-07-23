@@ -1,4 +1,7 @@
 sfdx force:org:create -a ltngshare -f config/project-scratch-def.json -s -d 1
+sfdx force:mdapi:deploy -d experienceBundlePilot -w 20
+sfdx shane:github:package:install -g mshanemc -r community-boilerplate
+
 sfdx force:source:push
 sfdx force:user:permset:assign -n TestingPerms
 

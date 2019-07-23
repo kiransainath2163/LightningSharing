@@ -1,8 +1,12 @@
 {
-  "edition": "Developer",
-  "hasSampleData" : true,
-  "orgPreferences" : {
-    "enabled" : ["S1DesktopEnabled"],
-    "disabled" : ["S1EncryptedStoragePref2"]
-  }
+    "edition": "Developer",
+    "hasSampleData": true,
+    "features": ["Communities"],
+    "settings": {
+        "orgPreferenceSettings": {
+            "s1DesktopEnabled": true,
+            "s1EncryptedStoragePref2": false,
+            "networksEnabled": true
+        }
+    }
 }

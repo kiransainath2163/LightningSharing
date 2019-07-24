@@ -2,8 +2,8 @@
   "values" : {
     "HeaderBackgroundColor" : "#FFFFFF",
     "TextTransformStyle" : "none",
-    "BorderColor" : "#D4D4D4",
     "DetailTextColor" : "#5A5A5A",
+    "BorderColor" : "#D4D4D4",
     "HeaderFonts" : "Ek Mukta",
     "CardBackgroundColor" : "rgba(255, 255, 255, 0)",
     "LoginBackgroundColor" : "#F4F4F4",

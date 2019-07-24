@@ -2,7 +2,7 @@
 <Network xmlns="http://soap.sforce.com/2006/04/metadata">
     <allowInternalUserLogin>false</allowInternalUserLogin>
     <allowMembersToFlag>false</allowMembersToFlag>
-    <changePasswordTemplate>unfiled$public/CommunityChangePasswordEmailTemplate</changePasswordTemplate>
+    <changePasswordTemplate>Boilerplate/Hi</changePasswordTemplate>
     <communityRoles/>
     <disableReputationRecordConversations>true</disableReputationRecordConversations>
     <emailSenderAddress>shane.mclaughlin@salesforce.com</emailSenderAddress>
@@ -23,7 +23,7 @@
     <enableTopicAssignmentRules>true</enableTopicAssignmentRules>
     <enableTopicSuggestions>false</enableTopicSuggestions>
     <enableUpDownVote>false</enableUpDownVote>
-    <forgotPasswordTemplate>unfiled$public/CommunityForgotPasswordEmailTemplate</forgotPasswordTemplate>
+    <forgotPasswordTemplate>Boilerplate/Hi</forgotPasswordTemplate>
     <gatherCustomerSentimentData>false</gatherCustomerSentimentData>
     <navigationLinkSet>
         <navigationMenuItem>
@@ -32,6 +32,14 @@
             <publiclyAvailable>false</publiclyAvailable>
             <target>/contactsupport</target>
             <type>InternalLink</type>
+        </navigationMenuItem>
+        <navigationMenuItem>
+            <defaultListViewId>All</defaultListViewId>
+            <label>Private Test Objects</label>
+            <position>2</position>
+            <publiclyAvailable>false</publiclyAvailable>
+            <target>ltngsharing__PrivateTestObject__c</target>
+            <type>SalesforceObject</type>
         </navigationMenuItem>
     </navigationLinkSet>
     <networkMemberGroups>
@@ -54,5 +62,5 @@
         <standardTab>Chatter</standardTab>
     </tabs>
     <urlPathPrefix>lsct</urlPathPrefix>
-    <welcomeTemplate>unfiled$public/CommunityWelcomeEmailTemplate</welcomeTemplate>
+    <welcomeTemplate>Boilerplate/Hi</welcomeTemplate>
 </Network>

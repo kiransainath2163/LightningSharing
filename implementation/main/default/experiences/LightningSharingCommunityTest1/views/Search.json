@@ -20,8 +20,8 @@
       "componentAttributes" : {
         "showTopResults" : "true",
         "topicId" : "{!topicId}",
-        "term" : "{!searchString}",
         "searchTerm" : "{!searchString}",
+        "term" : "{!searchString}",
         "scopes" : "[{\"name\":\"KnowledgeArticleVersion\",\"isPublic\":true},{\"name\":\"Case\",\"isPublic\":false},{\"name\":\"ContentDocument\",\"isPublic\":true}]",
         "searchResultFiltering" : "true"
       },

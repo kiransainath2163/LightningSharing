@@ -9,6 +9,12 @@
             "c/existingShares": [
                 "existingShares/existingShares.js"
             ],
+            "c/lightningSharingBuilderWrapper": [
+                "lightningSharingBuilderWrapper/lightningSharingBuilderWrapper.js"
+            ],
+            "c/lightningSharingTabs": [
+                "lightningSharingTabs/lightningSharingTabs.js"
+            ],
             "c/lightningSharingWrapper": [
                 "lightningSharingWrapper/lightningSharingWrapper.js"
             ],
@@ -17,12 +23,6 @@
             ],
             "c/sharingButtonSupport": [
                 "sharingButtonSupport/sharingButtonSupport.js"
-            ],
-            "c/lightningSharingBuilderWrapper": [
-                "lightningSharingBuilderWrapper/lightningSharingBuilderWrapper.js"
-            ],
-            "c/lightningSharingTabs": [
-                "lightningSharingTabs/lightningSharingTabs.js"
             ]
         }
     },

@@ -2,3 +2,8 @@
 **/jsconfig.json
 
 **/.eslintrc.json
+*Profile.profile
+AppSwitcher.appMenu
+SiteDotCom
+*.wapp*
+*.wds*

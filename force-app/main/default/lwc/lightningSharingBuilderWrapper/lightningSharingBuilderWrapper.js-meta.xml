@@ -10,8 +10,14 @@
         <target>lightningCommunity__Default</target>
     </targets>
     <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <supportedFormFactors>
+                <supportedFormFactor type="Small" />
+                <supportedFormFactor type="Large" />
+            </supportedFormFactors>
+        </targetConfig>
         <targetConfig targets="lightningCommunity__Default">
-            <property name="recordId" type="String" description="should be set to {!recordId}"></property>
+            <property name="recordId" type="String" description="should be set to {!recordId}"></property>            
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

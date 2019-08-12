@@ -8,6 +8,7 @@ sfdx force:user:password:generate
 sfdx force:source:push -f
 sfdx shane:communities:publish
 sfdx force:user:permset:assign -n TestingPerms
+sfdx force:user:permset:assign -n LightningOnMobile
 
 sfdx force:apex:execute -f scripts/roleAssign.cls 
 sfdx force:apex:execute -f scripts/communityUserCreate.cls 

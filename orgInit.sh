@@ -3,7 +3,7 @@ sfdx force:mdapi:deploy -d experienceBundlePilot -w 20
 sfdx force:source:deploy -p boilerplate
 
 # for mobile
-sfdx force:user:password:generate
+sfdx shane:user:password:set -g User -l User -p sfdx1234 
 
 sfdx force:source:push -f
 sfdx shane:communities:publish

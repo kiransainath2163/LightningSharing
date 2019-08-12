@@ -1,4 +1,4 @@
-sfdx force:org:create -a ltngshare -f config/project-scratch-def.json -s -d 1
+sfdx shane:org:create -a ltngshare -f config/project-scratch-def.json -s -d 1 -o ltng.share --userprefix shane
 sfdx force:mdapi:deploy -d experienceBundlePilot -w 20
 sfdx force:source:deploy -p boilerplate
 

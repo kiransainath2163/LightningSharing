@@ -1,5 +1,5 @@
 <template>
-    <lightning-card title={cardTitle}>
+    <lightning-card title={cardTitle} variant="narrow">
         <div slot="actions">
             <lightning-button-group>
                 <lightning-button
@@ -16,6 +16,7 @@
         <div class="slds-m-horizontal_medium">
             <c-lightning-sharing-tabs
                 record-id={recordId}
+                flexipage-region-width={flexipageRegionWidth}
             ></c-lightning-sharing-tabs>
         </div>
     </lightning-card>

@@ -1,5 +1,44 @@
 <template>
     <template if:true={wiredSharings}>
-      <lightning-datatable data={tableData} columns={columns} key-field="UserOrGroupId" hide-checkbox-column="true" onrowaction={handleRowAction}></lightning-datatable>
+        <template if:true={isTiles}>
+            <template for:each={tableData} for:item="row">
+                <lightning-tile
+                    key={row.UserOrGroupID}
+                    label={row.UserOrGroupName}
+                >
+                    <p>{row.UserOrGroupType} ({row.SubType})</p>
+                    <p>{row.AccessLevel} ({row.RowCause})</p>
+                    <lightning-button-group>
+                        <lightning-button
+                            label="None"
+                            disabled={row.noneDisabled}
+                            value={row.UserOrGroupID}
+                            onclick={tileNoneHandler}
+                        ></lightning-button>
+                        <lightning-button
+                            label="Read"
+                            disabled={row.readDisabled}
+                            value={row.UserOrGroupID}
+                            onclick={tileReadHandler}
+                        ></lightning-button>
+                        <lightning-button
+                            label="Read/Write"
+                            disabled={row.editDisabled}
+                            value={row.UserOrGroupID}
+                            onclick={tileReadWriteHandler}
+                        ></lightning-button>
+                    </lightning-button-group>
+                </lightning-tile>
+            </template>
+        </template>
+        <template if:false={isTiles}>
+            <lightning-datatable
+                data={tableData}
+                columns={columns}
+                key-field="UserOrGroupId"
+                hide-checkbox-column="true"
+                onrowaction={handleRowAction}
+            ></lightning-datatable>
+        </template>
     </template>
 </template>

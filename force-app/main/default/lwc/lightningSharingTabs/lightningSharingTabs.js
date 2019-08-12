@@ -5,6 +5,7 @@ import AddNewPermission from '@salesforce/label/c.AddNewPermission';
 
 export default class LightningSharingWrapper extends LightningElement {
     @api recordId;
+    @api flexipageRegionWidth;
 
     label = {
         ViewCurrentPermissions,

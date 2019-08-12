@@ -1,10 +1,16 @@
 <template>
     <lightning-tabset variant="scoped">
         <lightning-tab label={label.ViewCurrentPermissions}>
-            <c-existing-shares record-id={recordId}></c-existing-shares>
+            <c-existing-shares
+                record-id={recordId}
+                flexipage-region-width={flexipageRegionWidth}
+            ></c-existing-shares>
         </lightning-tab>
         <lightning-tab label={label.AddNewPermission}>
-            <c-add-new-shares record-id={recordId}></c-add-new-shares>
+            <c-add-new-shares
+                record-id={recordId}
+                flexipage-region-width={flexipageRegionWidth}
+            ></c-add-new-shares>
         </lightning-tab>
     </lightning-tabset>
 </template>

@@ -10,6 +10,7 @@ export default class LightningSharingWrapper extends NavigationMixin(
     LightningElement
 ) {
     @api recordId;
+    @api flexipageRegionWidth;
     @api log = false;
     source = 'LightningSharingWrapper';
 

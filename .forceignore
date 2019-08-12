@@ -7,3 +7,10 @@ AppSwitcher.appMenu
 SiteDotCom
 *.wapp*
 *.wds*
+
+# communities stuff
+**/networks
+**/experiences
+**/sites
+**/networkBranding
+**/email

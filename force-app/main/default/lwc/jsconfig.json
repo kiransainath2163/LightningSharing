@@ -23,6 +23,9 @@
             ],
             "c/sharingButtonSupport": [
                 "sharingButtonSupport/sharingButtonSupport.js"
+            ],
+            "c/mobileButtonGroup": [
+                "mobileButtonGroup/mobileButtonGroup.js"
             ]
         }
     },

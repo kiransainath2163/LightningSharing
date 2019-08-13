@@ -37,6 +37,10 @@ export default class AddNewShares extends LightningElement {
     @track searchString = '';
     source = 'addNewShares';
 
+    get isTiles() {
+        return this.flexipageRegionWidth === 'SMALL';
+    }
+
     get tooManyResults() {
         return this.searchResults.length > 199;
     }

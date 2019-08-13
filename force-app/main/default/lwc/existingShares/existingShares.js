@@ -68,24 +68,8 @@ export default class ExistingShares extends NavigationMixin(LightningElement) {
                     ...buttonStylingSingle(sharing)
                 });
             });
-            console.log(newArray);
             this.tableData = newArray;
         }
-    }
-
-    async tileNoneHandler(event) {
-        await shareDelete(event.path[0].value, this.recordId);
-        this.refresh();
-    }
-
-    async tileReadHandler(event) {
-        await shareUpdate(event.path[0].value, this.recordId, 'Read');
-        this.refresh();
-    }
-
-    async tileReadWriteHandler(event) {
-        await shareUpdate(event.path[0].value, this.recordId, 'Edit');
-        this.refresh();
     }
 
     async handleRowAction(event) {
@@ -130,6 +114,14 @@ export default class ExistingShares extends NavigationMixin(LightningElement) {
         }
 
         // options for the actions
+    }
+
+    navToRecord(event) {
+        this.viewRecordRouter(
+            this.tableData.find(
+                row => row.UserOrGroupID === event.path[0].value
+            )
+        );
     }
 
     viewRecordRouter(row) {

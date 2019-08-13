@@ -1,35 +1,24 @@
 <template>
     <template if:true={wiredSharings}>
         <template if:true={isTiles}>
-            <template for:each={tableData} for:item="row">
-                <lightning-tile
-                    key={row.UserOrGroupID}
-                    label={row.UserOrGroupName}
-                >
-                    <p>{row.UserOrGroupType} ({row.SubType})</p>
-                    <p>{row.AccessLevel} ({row.RowCause})</p>
-                    <lightning-button-group>
+            <ul class="slds-has-dividers_bottom-space">
+                <template for:each={tableData} for:item="row">
+                    <li class="slds-item" key={row.UserOrGroupID}>
                         <lightning-button
-                            label="None"
-                            disabled={row.noneDisabled}
+                            label={row.UserOrGroupName}
+                            onclick={navToRecord}
                             value={row.UserOrGroupID}
-                            onclick={tileNoneHandler}
+                            variant="base"
                         ></lightning-button>
-                        <lightning-button
-                            label="Read"
-                            disabled={row.readDisabled}
-                            value={row.UserOrGroupID}
-                            onclick={tileReadHandler}
-                        ></lightning-button>
-                        <lightning-button
-                            label="Read/Write"
-                            disabled={row.editDisabled}
-                            value={row.UserOrGroupID}
-                            onclick={tileReadWriteHandler}
-                        ></lightning-button>
-                    </lightning-button-group>
-                </lightning-tile>
-            </template>
+                        <p>{row.UserOrGroupType} ({row.SubType})</p>
+                        <p>{row.AccessLevel} because {row.RowCause}</p>
+                        <c-mobile-button-group
+                            row={row}
+                            onrowaction={handleRowAction}
+                        ></c-mobile-button-group>
+                    </li>
+                </template>
+            </ul>
         </template>
         <template if:false={isTiles}>
             <lightning-datatable

@@ -1,0 +1,22 @@
+<template>
+    <lightning-button-group>
+        <lightning-button
+            label="None"
+            disabled={row.noneDisabled}
+            value={row.UserOrGroupID}
+            onclick={tileNoneHandler}
+        ></lightning-button>
+        <lightning-button
+            label="Read"
+            disabled={row.readDisabled}
+            value={row.UserOrGroupID}
+            onclick={tileReadHandler}
+        ></lightning-button>
+        <lightning-button
+            label="Read/Write"
+            disabled={row.editDisabled}
+            value={row.UserOrGroupID}
+            onclick={tileReadWriteHandler}
+        ></lightning-button>
+    </lightning-button-group>
+</template>

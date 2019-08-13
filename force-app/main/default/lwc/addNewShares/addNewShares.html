@@ -1,11 +1,6 @@
 <template>
     <lightning-layout vertical-align="end" multiple-rows="true">
-        <lightning-layout-item
-            padding="horizontal-small"
-            flexibility="grow"
-            size="12"
-            medium-device-size="4"
-        >
+        <lightning-layout-item padding="horizontal-small" flexibility="grow">
             <lightning-combobox
                 label={label.Search}
                 name="mdtype"
@@ -14,12 +9,7 @@
                 value={selectedType}
             ></lightning-combobox>
         </lightning-layout-item>
-        <lightning-layout-item
-            padding="horizontal-small"
-            flexibility="grow"
-            size="12"
-            medium-device-size="7"
-        >
+        <lightning-layout-item padding="horizontal-small" flexibility="grow">
             <lightning-input
                 type="search"
                 label={label.For}
@@ -31,12 +21,7 @@
             ></lightning-input>
         </lightning-layout-item>
 
-        <lightning-layout-item
-            padding="horizontal-small"
-            flexibility="none"
-            size="12"
-            medium-device-size="1"
-        >
+        <lightning-layout-item padding="horizontal-small" flexibility="none">
             <lightning-button
                 type="submit"
                 label="Search"
@@ -56,12 +41,27 @@
             <h2>{label.TooManyResultsMessage}</h2>
         </div>
     </template>
-    <lightning-datatable
-        data={searchResults}
-        columns={columns}
-        key-field="Id"
-        hide-checkbox-column="true"
-        onrowaction={handleRowAction}
-        resize-column-disabled
-    ></lightning-datatable>
+    <template if:true={isTiles}>
+        <ul class="slds-has-dividers_bottom-space slds-m-top_medium">
+            <template for:each={searchResults} for:item="row">
+                <li class="slds-item" key={row.UserOrGroupID}>
+                    <p>{row.Name}</p>
+                    <c-mobile-button-group
+                        row={row}
+                        onrowaction={handleRowAction}
+                    ></c-mobile-button-group>
+                </li>
+            </template>
+        </ul>
+    </template>
+    <template if:false={isTiles}>
+        <lightning-datatable
+            data={searchResults}
+            columns={columns}
+            key-field="Id"
+            hide-checkbox-column="true"
+            onrowaction={handleRowAction}
+            resize-column-disabled
+        ></lightning-datatable>
+    </template>
 </template>

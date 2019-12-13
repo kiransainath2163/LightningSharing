@@ -270,7 +270,7 @@ global static String getSharings(Id recordId){
 			throw new AuraHandledException(Label.LackingPermissions);
 		}
 
-		String query = 'select Id, RowCause, UserOrGroupId, ' +getAccessLevelField(sobj)+ ' from ' +getSharingTableName(sobj)+ ' where ' + getLookupField(sobj)+ ' = \'' + String.escapeSingleQuotes(String.valueOf(recordId)) + '\'';
+		String query = 'select Id, toLabel(RowCause), UserOrGroupId, ' +getAccessLevelField(sobj)+ ' from ' +getSharingTableName(sobj)+ ' where ' + getLookupField(sobj)+ ' = \'' + String.escapeSingleQuotes(String.valueOf(recordId)) + '\'';
 		System.debug(query);
 		return query;
 	}

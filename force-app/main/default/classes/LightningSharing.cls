@@ -126,7 +126,6 @@ global without sharing class LightningSharing {
 				}
 				return JSON.serialize(share);
 			}
-		return null;
 	}
 
 	@AuraEnabled(cacheable=true)

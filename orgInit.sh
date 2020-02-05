@@ -1,5 +1,4 @@
 sfdx force:org:create -a ltngshare -f config/project-scratch-def.json -s -d 1
-sfdx force:mdapi:deploy -d experienceBundlePilot -w 20
 sfdx force:source:deploy -p boilerplate
 
 # for mobile

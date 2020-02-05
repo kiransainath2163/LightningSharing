@@ -3,10 +3,17 @@
     "hasSampleData": true,
     "features": ["Communities", "Sites", "SiteDotCom"],
     "settings": {
-        "orgPreferenceSettings": {
-            "s1DesktopEnabled": true,
-            "s1EncryptedStoragePref2": false,
-            "networksEnabled": true
+        "lightningExperienceSettings": {
+            "enableS1DesktopEnabled": true
+        },
+        "mobileSettings": {
+            "enableS1EncryptedStoragePref2": false
+        },
+        "communitiesSettings": {
+            "enableNetworksEnabled": true
+        },
+        "experienceBundleSettings": {
+            "enableExperienceBundleMetadata": true
         }
     }
 }

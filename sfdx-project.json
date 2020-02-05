@@ -14,7 +14,7 @@
     ],
     "namespace": "ltngsharing",
     "sfdcLoginUrl": "https://login.salesforce.com",
-    "sourceApiVersion": "48.0",
+    "sourceApiVersion": "47.0",
     "packageAliases": {
         "lightningSharing": "0Ho6A000000CaTSSA0"
     }

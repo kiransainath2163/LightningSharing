@@ -1,9 +1,0 @@
-{
-  "urlPrefix" : "dashboard",
-  "appPageId" : "7f4fdac9-a1a5-4015-bf07-51969a4b2b79",
-  "routeType" : "list-01Z",
-  "pageAccess" : "UseParent",
-  "label" : "Dashboard List",
-  "id" : "57c7504e-6c9f-41ad-bac8-2f3482435dc1",
-  "type" : "route"
-}

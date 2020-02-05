@@ -1,9 +1,0 @@
-{
-  "urlPrefix" : "topic",
-  "appPageId" : "7f4fdac9-a1a5-4015-bf07-51969a4b2b79",
-  "routeType" : "topic",
-  "pageAccess" : "UseParent",
-  "label" : "Topic Detail",
-  "id" : "f7fc74c8-4724-40e8-ba4c-b08112f113e6",
-  "type" : "route"
-}

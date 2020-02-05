@@ -1,9 +1,0 @@
-{
-  "urlPrefix" : "flow",
-  "appPageId" : "7f4fdac9-a1a5-4015-bf07-51969a4b2b79",
-  "routeType" : "flow",
-  "pageAccess" : "UseParent",
-  "label" : "Flow",
-  "id" : "924b0cc4-1d9e-4f87-af3c-3ead6202d643",
-  "type" : "route"
-}

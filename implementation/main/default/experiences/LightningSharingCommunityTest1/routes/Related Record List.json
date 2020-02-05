@@ -1,9 +1,0 @@
-{
-  "urlPrefix" : "relatedlist",
-  "appPageId" : "7f4fdac9-a1a5-4015-bf07-51969a4b2b79",
-  "routeType" : "relatedlist",
-  "pageAccess" : "UseParent",
-  "label" : "Related Record List",
-  "id" : "b027c4aa-45e5-49a4-9d4d-6776f2cc183d",
-  "type" : "route"
-}

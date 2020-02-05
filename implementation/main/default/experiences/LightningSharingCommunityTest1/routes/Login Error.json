@@ -1,9 +1,0 @@
-{
-  "urlPrefix" : "error",
-  "appPageId" : "4298c51d-83e1-4edc-bf09-b10548f4d789",
-  "routeType" : "login-error",
-  "pageAccess" : "UseParent",
-  "label" : "Login Error",
-  "id" : "fb2c4ecf-b6bb-4754-ae89-9608798ff77f",
-  "type" : "route"
-}

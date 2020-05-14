@@ -153,6 +153,12 @@ export default class AddNewShares extends LightningElement {
         try {
           await shareUpdate(event.detail.row.Id, this.recordId, 'Read');
           this.refresh();
+          const evt1 = new ShowToastEvent({
+            title: 'Successfully given read access',
+            message: 'You have successfully given read access to the user',
+            variant: 'success',
+          });
+          this.dispatchEvent(evt1);
         } catch (e) {
           this.toastTheError(e, 'shareUpdate-read');
         }
@@ -161,6 +167,12 @@ export default class AddNewShares extends LightningElement {
         try {
           await shareUpdate(event.detail.row.Id, this.recordId, 'Edit');
           this.refresh();
+          const evt2 = new ShowToastEvent({
+            title: 'Successfully given read/write access',
+            message: 'You have successfully given read/write access to the user',
+            variant: 'success',
+          });
+          this.dispatchEvent(evt2);
         } catch (e) {
           this.toastTheError(e, 'shareUpdate-edit');
         }
@@ -169,6 +181,12 @@ export default class AddNewShares extends LightningElement {
         try {
           await shareDelete(event.detail.row.Id, this.recordId);
           this.refresh();
+          const evt = new ShowToastEvent({
+            title: 'Removed Access Successfully',
+            message: 'You have successfully removed access to the user',
+            variant: 'success',
+          });
+          this.dispatchEvent(evt);
         } catch (e) {
           this.toastTheError(e, 'shareUpdate-edit');
         }

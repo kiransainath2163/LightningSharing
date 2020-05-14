@@ -78,6 +78,12 @@ export default class ExistingShares extends NavigationMixin(LightningElement) {
         // await this.deleteShare(event.detail.row);
         await shareDelete(event.detail.row.UserOrGroupID, this.recordId);
         this.refresh();
+        const evt = new ShowToastEvent({
+          title: 'Removed Access Successfully',
+          message: 'You have successfully removed access to the user',
+          variant: 'success',
+        });
+        this.dispatchEvent(evt);
         break;
       case 'read':
         await shareUpdate(
@@ -86,6 +92,12 @@ export default class ExistingShares extends NavigationMixin(LightningElement) {
           'Read'
         );
         this.refresh();
+        const evt1 = new ShowToastEvent({
+          title: 'Successfully given read access',
+          message: 'You have successfully given read access to the user',
+          variant: 'success',
+        });
+        this.dispatchEvent(evt1);
         // await this.updateShares(event.detail.row, 'Read');
         break;
       case 'read_write':
@@ -96,6 +108,12 @@ export default class ExistingShares extends NavigationMixin(LightningElement) {
           'Edit'
         );
         this.refresh();
+        const evt2 = new ShowToastEvent({
+          title: 'Successfully given read/write access',
+          message: 'You have successfully given read/write access to the user',
+          variant: 'success',
+        });
+        this.dispatchEvent(evt2);
         break;
       default: 
         this.logError(this.log, this.source, 'handleRowAction switch statement no match found');
